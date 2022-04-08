@@ -1,0 +1,1 @@
+gXMLBuffer ="<?xml version=\"1.0\" encoding=\"utf-8\" ?><data  src=\"toc.js\"  name=\"Dữ liệu nền\"><book name=\"Sản phẩm\" src=\"toc2.js\" /><book name=\"Kinh doanh\" src=\"toc3.js\" /></data>";

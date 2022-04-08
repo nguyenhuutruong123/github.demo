@@ -1,0 +1,39 @@
+@page {
+size:landscape; 
+}
+  
+  
+div.page	{ 
+writing-mode: tb-rl;
+height: 80%;
+margin: 10% 0%;
+}
+
+
+html {
+	margin: 0;
+	padding: 0;
+	size: landscape;
+
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	color: #000;
+	background-color: #fff;
+	font-family: "Trebuchet MS", Verdana, "Lucida Grande", Tahoma, Helvetica, Sans-Serif;
+	writing-mode: tb-rl;
+}
+
+#divimp
+{
+	size: landscape;
+}
+
+#bandeau, #menutop, #menuleft, #criteres, #findoc
+{
+display: none
+}
+
+

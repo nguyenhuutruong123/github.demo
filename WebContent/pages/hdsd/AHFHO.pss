@@ -1,0 +1,104 @@
+﻿[Target:WebHelp Pro]
+ResultFileName=!SSL!\WebHelp_Pro\AHFHO.htm
+SSLayoutType=32
+ServerProjectName=AHFHO
+CreateProjectTime=
+CreateProjectUser=
+SupportMas_MPJ=1
+[Target:WebHelp]
+ResultFileName=!SSL!\WebHelp\AHFHO.htm
+SSLayoutType=2
+CreateProjectTime=
+CreateProjectUser=
+SupportMas_MPJ=1
+[Target:Microsoft HTML Help]
+ResultFileName=!SSL!\Microsoft_HTML_Help\AHFHO.chm
+SSLayoutType=1
+CreateProjectTime=
+CreateProjectUser=
+SupportMas_MPJ=1
+[Target:FlashHelp]
+ResultFileName=!SSL!\FlashHelp\AHFHO.htm
+SSLayoutType=2
+CreateProjectTime=
+CreateProjectUser=
+SupportMas_MPJ=1
+[Target:Printed Documentation]
+ResultFileName=!SSL!\Printed_Documentation\AHFHO.doc
+SSLayoutType=7
+[Target:XML Output]
+ResultFileName=!SSL!\XML_Output\AHFHO.xml
+SSLayoutType=8129
+[Target:FlashHelp Pro]
+ResultFileName=!SSL!\FlashHelp_Pro\AHFHO.htm
+SSLayoutType=2
+CreateProjectTime=
+CreateProjectUser=
+SupportMas_MPJ=1
+[Target:Adobe AIR]
+ResultFileName=!SSL!\Adobe_AIR\AHFHO.air
+SSLayoutType=512
+CreateProjectTime=
+CreateProjectUser=
+SupportMas_MPJ=1
+[Target:Multiscreen HTML5]
+ResultFileName=!SSL!\Multiscreen_HTML5\AHFHO.htm
+SSLayoutType=2
+CreateProjectTime=
+CreateProjectUser=
+SupportMas_MPJ=1
+[Target:eBook]
+ResultFileName=!SSL!\eBook\AHFHO.epub
+SSLayoutType=2
+CreateProjectTime=
+CreateProjectUser=
+SupportMas_MPJ=1
+[Target:Responsive HTML5]
+ResultFileName=!SSL!\Responsive_HTML5\index.htm
+SSLayoutType=2
+CreateProjectTime=12:09, September 12, 2019
+CreateProjectUser=GESO
+SupportMas_MPJ=1
+MindReader Server=
+ActionID For Generation=1001
+Remove Folder with prompt=1
+ViewFileName=!SSL!\Responsive_HTML5\index.htm
+ResultStatus=0
+BuildTimeHi=30763304
+BuildTimeLow=1063690085
+[Target:Mobile App]
+ResultFileName=!SSL!\Mobile_App\AHFHO.htm
+SSLayoutType=3
+CreateProjectTime=
+CreateProjectUser=
+SupportMas_MPJ=1
+[PreSingleSource]
+Html Help Project=D:\ROBOHELP\AHF\AHFHO\AHFHO.hhp
+Table Of Content=D:\ROBOHELP\AHF\AHFHO\AHFHO.hhc
+Index=D:\ROBOHELP\AHF\AHFHO\AHFHO.hhk
+Topic Index=D:\ROBOHELP\AHF\AHFHO\RHTopicKeyword$.hhk
+See Also Index=D:\ROBOHELP\AHF\AHFHO\AHFHO.hha
+Browse Sequence=D:\ROBOHELP\AHF\AHFHO\AHFHO.brs
+Glossary=D:\ROBOHELP\AHF\AHFHO\AHFHO.glo
+Topic Properties=D:\ROBOHELP\AHF\AHFHO\AHFHO.trs
+Active Folders=D:\ROBOHELP\AHF\AHFHO\AHFHO.trf
+Baggage Files=D:\ROBOHELP\AHF\AHFHO\AHFHO.trb
+Skin List=D:\ROBOHELP\AHF\AHFHO\AHFHO.trk
+Active Layout Names=D:\ROBOHELP\AHF\AHFHO\AHFHO.trl
+Template Files=D:\ROBOHELP\AHF\AHFHO\AHFHO.trt
+Project TOC List=D:\ROBOHELP\AHF\AHFHO\AHFHO.trtocl
+Project Index List=D:\ROBOHELP\AHF\AHFHO\AHFHO.tridxl
+Project Glossary List=D:\ROBOHELP\AHF\AHFHO\AHFHO.trglol
+Project CSS List=D:\ROBOHELP\AHF\AHFHO\AHFHO.trcss
+Project Variable Set List=D:\ROBOHELP\AHF\AHFHO\AHFHO.trvset
+External URL Settings=D:\ROBOHELP\AHF\AHFHO\SearchOptions.xml
+Screen Template File Details=D:\ROBOHELP\AHF\AHFHO\AHFHO.sctfdl
+CPSwfToHTML5Map=D:\ROBOHELP\AHF\AHFHO\__cpSwf2HTML5ZipMap
+Default Topic=D:\ROBOHELP\AHF\AHFHO\Chungloai.htm
+Build Tags0=31679;Online | Print
+Build Tags=
+Build Expression=
+Language ID=1033
+Language Name=en_US
+Language=D:\ROBOHELP\AHF\AHFHO\!Language!\en_US\RoboHHRE.lng
+Stop List=D:\ROBOHELP\AHF\AHFHO\!Language!\en_US\AHFHO.stp

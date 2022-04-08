@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<toc version="1.0">
+	<properties imagewidth="16" windowstyles="8388610" exwindowstyles="256">
+	</properties>
+	<item name="Mở đầu" link="Modau.htm">
+	</item>
+	<item name="Dữ liệu nền">
+		<item name="Sản phẩm">
+			<item name="Nhãn hàng" link="Nhanhang.htm">
+			</item>
+			<item name="Chủng loại" link="Chungloai.htm">
+			</item>
+			<item name="Đơn vị đo lường" link="Donvidoluong.htm">
+			</item>
+			<item name="Thông tin sản phẩm" link="Thongtinsanpham.htm">
+			</item>
+		</item>
+		<item name="Kinh doanh">
+			<item name="Kênh bán hàng" link="Kenhbanhang.htm">
+			</item>
+			<item name="Vùng Miền" link="Vungmien.htm">
+			</item>
+		</item>
+	</item>
+</toc>

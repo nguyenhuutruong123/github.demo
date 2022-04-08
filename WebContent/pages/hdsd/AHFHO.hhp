@@ -1,0 +1,44 @@
+﻿[OPTIONS]
+Compiled File=AHFHO.chm
+Title=AHFHO
+Contents File=AHFHO.hhc
+Index File=AHFHO.hhk
+Default topic=
+Default Window=
+Error log file=
+Display compile progress=No
+Display compile notes=No
+Full-text search=Yes
+Binary Index=Yes
+Auto Index=No
+Enhanced decompilation=No
+Binary TOC=No
+Flat=No
+LANG_ID=1033
+LANG_NAME=English (US)
+
+[WINDOWS]
+
+[FILES]
+Vungmien.htm
+Nhanhang.htm
+Kenhbanhang.htm
+Donvidoluong.htm
+Modau.htm
+Chungloai.htm
+Thongtinsanpham.htm
+Sanpham.htm
+!ScreenLayout!\Azure_Blue\usersettings.js
+
+AHFHO.glo
+AHFHO.brs
+[ALIAS]
+#include AHFHO.ali
+
+[MAP]
+#include BSSCDefault.h
+
+[TEXT POPUPS]
+BSSCDefault.h
+
+

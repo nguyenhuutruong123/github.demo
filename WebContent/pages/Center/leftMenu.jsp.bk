@@ -1,0 +1,923 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page  import = "geso.best.center.util.*" %>
+<%	String userId = (String) session.getAttribute("userId");  
+	String userTen = (String) session.getAttribute("userTen");  	
+	String sum = (String) session.getAttribute("sum");
+	Utility util = (Utility) session.getAttribute("util");
+	if(!util.check(userId, userTen, sum)){
+		response.sendRedirect("/Best/index.jsp");
+	}else{ %>
+			
+
+<html><head>
+<style type="text/css">
+body {
+	font-family:verdana,arial,sans-serif;
+	font-size:10pt;
+	margin:1px;
+	background-color:#ffffff;
+	}
+</style>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+
+
+
+	<title>jQuery Accordion Example</title>
+	
+	<style type="text/css">
+		/* A few IE bug fixes */
+		* { margin: 0; padding: 0; }
+		* html ul ul li a { height: 80%; }
+		* html ul li a { height: 80%; }
+		* html ul ul li { margin-bottom: -1px; }
+		
+		body { padding-left: 0em; font-family: Arial, Helvetica, sans-serif; }
+		#theMenu { width: 0px; height: 0px; margin: 0px; padding: 0; }
+		
+		/* Some list and link styling */
+	ul li {
+	width: 210px;
+	line-height: 20pt;
+	margin-bottom: 0;
+	border-left-width: 0px;
+	border-left-style: none;
+	border-left-color: #FFFFFF;
+	background-color: #80CB9B;
+	border-bottom-style: solid;
+	border-bottom-color: #FFFFFF;
+	border-bottom-width: thin;
+	margin-left: 0px;
+	padding-top: 0;
+	padding-right: 0;
+	padding-bottom: 0;
+	padding-left: 5px;
+	text-indent: 5px;
+}
+	
+	ul li a{
+	color: #000000;
+	font-size: 9px;
+	background-color: #80CB9B;
+	width: 210px;
+}
+		
+		ul li a:hover{
+	display:block;
+	color: #fff;
+	background-color: #80CB9B;
+	font-size: small;
+	width: 210px;
+}
+		
+	ul ul li {
+	width: 210px;
+	margin-left: 0px;
+	background-position: left center;
+	line-height: 18pt;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	border-top-color: #FFFFFF;
+	border-right-color: #FFFFFF;
+	border-bottom-color: #FFFFFF;
+	border-left-color: #FFFFFF;
+	background-color: #C5E8CD;
+	border-bottom-width: thin;
+	padding-left: 0;
+	font-family: Arial, Helvetica, sans-serif;
+}
+
+	ul ul li a {
+	display:marker;
+	color: #fff;
+	padding: 0px;
+	font-size: small;
+	width: 210px;
+	}
+	
+	ul ul li a:hover {
+	display:block;
+	color: #369;
+	padding: 0px;
+	font-size: small;
+	width: 215px;
+}
+		/* For the xtra menu */
+		
+	ul ul li a.selected{display:marker; color: #369; padding: 0px; font-size: small;}
+	
+	ul ul ul li { padding: 0;
+	width: 215px;
+	margin-left: 0px;
+	background-position: left center;
+	line-height: 20pt;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: none;
+	border-left-style: none;
+	border-top-color: #FFFFFF;
+	border-right-color: #FFFFFF;
+	border-bottom-color: #FFFFFF;
+	border-left-color: #FFFFFF;
+	background-color: #FFFFFF;
+	border-bottom-width: thin;}
+	
+		ul ul ul li a {
+	display:block;
+	color: #fff;
+	padding: 0px;
+	font-size: small;
+	background-color: #FFFFFF;
+}
+		ul ul ul li a:hover { display:block; color: #369; background-color: #CEF6F5; padding: 0px; font-size: small; }
+
+        ul ul ul li a.selected { display:block; color: #369; background-color: #CEF6F5; padding: 0px; font-size: small; }
+		
+		/* For the sub menu */
+		ul ul ul ul li {
+	border-left: none;
+	border-bottom: none;
+	padding: 0;
+	width: 175px;
+	margin-bottom: 0;
+	margin-left: 15px;
+	background-color: #F4F4F0;
+}
+		ul ul ul ul li a {
+	display:block;
+	color: #fff;
+	padding: 0px;
+	font-size: small;
+	background-color: #CCCCCC;
+}
+		ul ul ul ul li a:hover { display:block; color: #369; background-color: #CEF6F5; padding: 3px 8px; font-size: small; }
+
+        ul ul ul ul li a.selected { display:block; color: #369; background-color: #CEF6F5; padding: 3px 8px; font-size: small; }
+	
+		li { list-style-type: none; }
+		h2 { margin-top: 0em; }
+		
+		/* Header links styling */
+	h3.head a {
+	color: #000000;
+	display:block;
+	border-top: 0;
+	border-right: 0px;
+	background-position: 0% 50%;
+	text-decoration:none;
+	text-indent: 10px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	background-image: url(../images/expandbtn.gif);
+	background-repeat: no-repeat;
+	font-style: normal;
+	background-color: #80CB9B;
+	padding-left: 5px;
+	margin-left: 0px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	width: 210px;
+	}
+		
+	h3.head a:hover {
+	color: #000000;
+	background-position: 0% 50%;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	text-decoration:none;
+	text-indent: 10px;
+	background-color: #80CB9B;
+	background-image: url(../images/expandbtn.gif);
+	background-repeat: no-repeat;
+	padding-left: 5px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	width: 210px;
+	}
+	
+	h3.selected a {
+	background-position:0% 50%;
+	color: #000000;
+	text-indent: 10px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	text-decoration:none;
+	background-color: #80CB9B;
+	background-image: url(../images/collapsebtn.gif);
+	background-repeat: no-repeat;
+	padding-left: 5px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	width: 210px;
+	}
+	
+	h3.selected a:hover {
+	background-position:0% 50%;
+	color: #000000;
+	text-indent: 10px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 10pt;
+	text-decoration:none;
+	background-color: #80CB9B;
+	background-image: url(../images/collapsebtn.gif);
+	background-repeat: no-repeat;
+	padding-left: 5px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	width: 210px;
+	}
+		
+		/* Xtra Header links styling  background: #eee*/
+	h4.head a {
+	color: #000000;
+	display:block;
+	background-position: 0% 50%;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	text-decoration: none;
+	background-color: #C5E8CD;
+	background-image: url(../images/silver_triangle.gif);
+	background-repeat: no-repeat;
+	border-top-width: 0;
+	border-right-width: thin;
+	border-right-style: none;
+	border-top-color: #FFFFFF;
+	border-right-color: #FFFFFF;
+	border-bottom-color: #FFFFFF;
+	border-left-color: #FFFFFF;
+	text-indent: 10px;
+	margin-left: 0px;
+	padding-left: 5px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	border-bottom-width: thin;
+	border-bottom-style: solid;
+	width: 210px;
+	float: none;
+	}
+
+	h4.head a:hover {
+	color: #000000;
+	background-position: 0% 50%;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	text-indent:10px;
+	background-color: #C5E8CD;
+	background-image: url(../images/silver_triangle.gif);
+	background-repeat: no-repeat;
+	text-decoration: none;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 5px;
+	width: 210px;
+	}
+
+	h4.selected a {
+	background-position:0% 50%;
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	text-indent:10px;
+	text-decoration: none;
+	background-color: #C5E8CD;
+	background-image: url(../images/silver_triangle.gif);
+	background-repeat: no-repeat;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 5px;
+	width: 210px;
+	}
+
+	h4.selected a:hover {
+	background-position:0% 50%;
+	color: #000000;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 9pt;
+	text-indent:10px;
+	background-color: #C5E8CD;
+	background-image: url(../images/silver_triangle.gif);
+	background-repeat: no-repeat;
+	text-decoration: none;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 5px;
+	width: 210px;
+	}
+				
+		/* sunmenu Header links styling*/
+		h5.head a {
+	color: #000000;
+	display:block;
+	border-top: 0;
+	border-right: 0px;
+	background-position: 100% 50%;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	text-decoration: none;
+	background-color: #FFFFFF;
+	line-height: 25px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 0px;
+	width: 200px;
+		}
+		h5.head a:hover {
+	color: #000000;
+	background-position: 100% 50%;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	background-color: #E2F0D9;
+	margin: 0px;
+	line-height: 25px;
+	padding-top: 3px;
+	padding-bottom: 3px;
+	padding-left: 0px;
+	width: 192px;
+		}
+		h5.selected a {
+	background-position:98% 50%;
+	color: #fff;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	background-color: #FFFFFF;
+		}
+		h5.selected a:hover {
+	background-position:100% 50%;
+	color: #ffffff;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 8pt;
+	background-color: #FFFFFF;
+	margin: 0px;
+	padding-left: 0px;
+		}
+		
+		/* subMenu Header links styling  background: #eee*/
+		h6.head a { 
+		color: #2E2EFE;
+		display:block; 
+		border-top: 0;
+		border-right: 0px ;
+		background: #ffffff ; 
+		background-position: 98% 50%;
+        text-decoration:none;
+		font-family: Arial, Helvetica, sans-serif;
+	    font-size: 9pt;
+		}
+		h6.head a:hover { 
+		color: #2E2EFE;
+		background: #E0F8F7  ; 
+		background-position: 98% 50%;
+		
+		font-family: Arial, Helvetica, sans-serif;
+	    font-size: 9pt;
+		text-decoration:none;
+		}
+		h6.selected a { 
+		background: #0174DF ; 
+		background-position:98% 50%;
+		color: #fff;
+		
+        font-family: Arial, Helvetica, sans-serif;
+	    font-size: 9pt;
+		text-decoration:none;
+		}
+		h6.selected a:hover { 
+		background: #E0F8F7 ; 
+		background-position:98% 50%;
+		color: #2E2EFE;
+		
+        font-family: Arial, Helvetica, sans-serif;
+	    font-size: 9pt;
+		text-decoration:none;
+		}
+	</style>
+	
+
+<!-- BEGIN RENDER AUTO -->
+
+<% if (!geso.dms.center.util.GlobalValue.dev_mode) { %>
+	<script type="text/javascript" src="../scripts/disableF12.js"></script>
+<% } %>
+
+<!-- END RENDER AUTO -->
+</head>
+		
+<script type="text/javascript" src="../scripts/jquery.js"></script>
+<script type="text/javascript" src="../scripts/accordion.js"></script>
+<script type="text/javascript">
+
+function HpbJumpQldlURL(url, menuId) 
+{
+  if (url != '')
+  { top.frames['content'].location.href = url; 
+  }
+  //reset menuId
+  top.frames['menu'].document.getElementById("nccId").setAttribute("class", "head"); 
+  top.frames['menu'].document.getElementById("dvkdId").setAttribute("class", "head");
+  top.frames['menu'].document.getElementById("kbkId").setAttribute("class", "head");
+  top.frames['menu'].document.getElementById("bgblcId").setAttribute("class", "head");
+  top.frames['menu'].document.getElementById("bgmnppId").setAttribute("class", "head");
+  //alert('menuId ' + menuId);    
+
+  if (menuId == 'dlncbId'){
+	top.frames['menu'].document.getElementById("nccId").setAttribute("class", "head selected");
+  } 
+  //alert ('aaa' +top.frames['menu'].document.getElementById(menuId));
+  top.frames['menu'].document.getElementById(menuId).setAttribute("class", "head selected" );
+}
+
+ function HpbJumpDlnSpURL(url, menuId) 
+{
+  if (url != '')
+  { top.frames['content'].location.href = url; 
+  }
+  //reset menuId
+  top.frames['menu'].document.getElementById("nhId").setAttribute("class", "head"); 
+  top.frames['menu'].document.getElementById("clId").setAttribute("class", "head");
+  top.frames['menu'].document.getElementById("nspId").setAttribute("class", "head");
+  top.frames['menu'].document.getElementById("dvdlspId").setAttribute("class", "head");
+  top.frames['menu'].document.getElementById("ttspId").setAttribute("class", "head");
+  //alert('menuId ' + menuId);    
+
+  if (menuId == 'dlnspId'){
+	top.frames['menu'].document.getElementById("nhId").setAttribute("class", "head selected");
+  } 
+  //alert ('aaa' +top.frames['menu'].document.getElementById(menuId));
+  top.frames['menu'].document.getElementById(menuId).setAttribute("class", "head selected" );
+}
+
+function HpbJumpDlnHtkdURL(url, menuId) 
+{
+  if (url != '')
+  { top.frames['content'].location.href = url; 
+  }
+  //reset menuId
+  top.frames['menu'].document.getElementById("kbhId").setAttribute("class", "head"); 
+  top.frames['menu'].document.getElementById("plchId").setAttribute("class", "head");
+  top.frames['menu'].document.getElementById("phchId").setAttribute("class", "head");
+  top.frames['menu'].document.getElementById("nchId").setAttribute("class", "head");
+  top.frames['menu'].document.getElementById("gsbhId").setAttribute("class", "head");
+  
+  top.frames['menu'].document.getElementById("vmId").setAttribute("class", "head"); 
+  top.frames['menu'].document.getElementById("kvId").setAttribute("class", "head");
+  top.frames['menu'].document.getElementById("tpId").setAttribute("class", "head");
+  top.frames['menu'].document.getElementById("quanId").setAttribute("class", "head");
+  top.frames['menu'].document.getElementById("nppId").setAttribute("class", "head");
+  top.frames['menu'].document.getElementById("ddkdId").setAttribute("class", "head");
+  top.frames['menu'].document.getElementById("palmId").setAttribute("class", "head");
+  //alert('menuId ' + menuId);    
+
+  if (menuId == 'dlnHtkdId'){
+	top.frames['menu'].document.getElementById("kbhId").setAttribute("class", "head selected");
+  } 
+  //alert ('aaa' +top.frames['menu'].document.getElementById(menuId));
+  top.frames['menu'].document.getElementById(menuId).setAttribute("class", "head selected" );
+}
+
+function HpbJumpKtdlnURL(url, menuId) 
+{
+  if (url != '')
+  { top.frames['content'].location.href = url; 
+  }
+  //reset menuId
+  top.frames['menu'].document.getElementById("dsKhId").setAttribute("class", "head"); 
+  top.frames['menu'].document.getElementById("dsNppId").setAttribute("class", "head");
+  top.frames['menu'].document.getElementById("dsDdkdId").setAttribute("class", "head");
+  top.frames['menu'].document.getElementById("dsGsbhId").setAttribute("class", "head");
+  top.frames['menu'].document.getElementById("dsSpId").setAttribute("class", "head");
+  
+  top.frames['menu'].document.getElementById("dsNspId").setAttribute("class", "head"); 
+  top.frames['menu'].document.getElementById("dsClId").setAttribute("class", "head");
+  top.frames['menu'].document.getElementById("dsNhId").setAttribute("class", "head");
+  //alert('menuId ' + menuId);    
+
+  if (menuId == 'ktdlnId'){
+	top.frames['menu'].document.getElementById("dsNhId").setAttribute("class", "head selected");
+  } 
+  //alert ('aaa' +top.frames['menu'].document.getElementById(menuId));
+  top.frames['menu'].document.getElementById(menuId).setAttribute("class", "head selected" );
+}
+
+function HpbJumpQltkURL(url, menuId) 
+{
+  if (url != '')
+  { top.frames['content'].location.href = url; 
+  }
+  //reset menuId
+  top.frames['menu'].document.getElementById("dhtNppId").setAttribute("class", "head"); 
+  top.frames['menu'].document.getElementById("xdnId").setAttribute("class", "head");
+  top.frames['menu'].document.getElementById("ddnId").setAttribute("class", "head");
+  top.frames['menu'].document.getElementById("htNppId").setAttribute("class", "head");
+  top.frames['menu'].document.getElementById("nhdErpId").setAttribute("class", "head");
+  //alert('menuId ' + menuId);    
+
+  if (menuId == 'qltkId'){
+	top.frames['menu'].document.getElementById("nhdErpId").setAttribute("class", "head selected");
+  } 
+  //alert ('aaa' +top.frames['menu'].document.getElementById(menuId));
+  top.frames['menu'].document.getElementById(menuId).setAttribute("class", "head selected" );
+}
+
+function HpbJumpXldhURL(url, menuId) 
+{
+  if (url != '')
+  { top.frames['content'].location.href = url; 
+  }
+  //reset menuId
+  top.frames['menu'].document.getElementById("ndhId").setAttribute("class", "head"); 
+  top.frames['menu'].document.getElementById("csdhId").setAttribute("class", "head");
+  top.frames['menu'].document.getElementById("hdhId").setAttribute("class", "head");
+  top.frames['menu'].document.getElementById("cdhId").setAttribute("class", "head");
+  top.frames['menu'].document.getElementById("bcXldhId").setAttribute("class", "head");
+  //alert('menuId ' + menuId);    
+
+  if (menuId == 'xldhId'){
+	top.frames['menu'].document.getElementById("ndhId").setAttribute("class", "head selected");
+  } 
+  //alert ('aaa' +top.frames['menu'].document.getElementById(menuId));
+  top.frames['menu'].document.getElementById(menuId).setAttribute("class", "head selected" );
+}
+
+
+function HpbJumpXlthURL(url, menuId) 
+{
+  if (url != '')
+  { top.frames['content'].location.href = url; 
+  }
+  //reset menuId
+  top.frames['menu'].document.getElementById("dnthId").setAttribute("class", "head"); 
+  //alert('menuId ' + menuId);    
+
+  if (menuId == 'xlthId'){
+	top.frames['menu'].document.getElementById("dnthId").setAttribute("class", "head selected");
+  } 
+  //alert ('aaa' +top.frames['menu'].document.getElementById(menuId));
+  top.frames['menu'].document.getElementById(menuId).setAttribute("class", "head selected" );
+}
+
+function HpbJumpQlkmURL(url, menuId) 
+{
+  if (url != '')
+  { top.frames['content'].location.href = url; 
+  }
+  //reset menuId
+  top.frames['menu'].document.getElementById("nspKmId").setAttribute("class", "head"); 
+  top.frames['menu'].document.getElementById("ctKmId").setAttribute("class", "head"); 
+  top.frames['menu'].document.getElementById("dpbKmId").setAttribute("class", "head"); 
+  
+  top.frames['menu'].document.getElementById("nDcPbKmId").setAttribute("class", "head"); 
+  top.frames['menu'].document.getElementById("dTtCtKmId").setAttribute("class", "head"); 
+  top.frames['menu'].document.getElementById("dycThemKmId").setAttribute("class", "head"); 
+  top.frames['menu'].document.getElementById("bcKmId").setAttribute("class", "head"); 
+  //alert('menuId ' + menuId);    
+
+  if (menuId == 'qlkmId'){
+	top.frames['menu'].document.getElementById("nspKmId").setAttribute("class", "head selected");
+  } 
+  //alert ('aaa' +top.frames['menu'].document.getElementById(menuId));
+  top.frames['menu'].document.getElementById(menuId).setAttribute("class", "head selected" );
+}
+
+function HpbJumpQltbURL(url, menuId) 
+{
+  if (url != '')
+  { top.frames['content'].location.href = url; 
+  }
+  //reset menuId
+  top.frames['menu'].document.getElementById("nsptbId").setAttribute("class", "head"); 
+  top.frames['menu'].document.getElementById("cttbId").setAttribute("class", "head"); 
+  top.frames['menu'].document.getElementById("pbtbId").setAttribute("class", "head"); 
+  top.frames['menu'].document.getElementById("dPbtbId").setAttribute("class", "head"); 
+  top.frames['menu'].document.getElementById("dTttbId").setAttribute("class", "head"); 
+ 
+  //alert('menuId ' + menuId);    
+  if (menuId == 'qltbId'){
+	top.frames['menu'].document.getElementById("nsptbId").setAttribute("class", "head selected");
+  } 
+  //alert ('aaa' +top.frames['menu'].document.getElementById(menuId));
+  top.frames['menu'].document.getElementById(menuId).setAttribute("class", "head selected" );
+}
+
+function HpbJumpBcqtURL(url, menuId) 
+{
+  if (url != '')
+  { top.frames['content'].location.href = url; 
+  }
+  //reset menuId
+  top.frames['menu'].document.getElementById("bcdsId").setAttribute("class", "head"); 
+  top.frames['menu'].document.getElementById("bcQltkId").setAttribute("class", "head"); 
+ 
+  //alert('menuId ' + menuId);    
+  if (menuId == 'bcqtId'){
+	top.frames['menu'].document.getElementById("bcdsId").setAttribute("class", "head selected");
+  } 
+  //alert ('aaa' +top.frames['menu'].document.getElementById(menuId));
+  top.frames['menu'].document.getElementById(menuId).setAttribute("class", "head selected" );
+}
+
+function JumpURL(url) 
+{
+  if (url != '')
+  { top.frames['content'].location.href = url; 
+  }
+}
+
+jQuery().ready(function(){	
+	// applying the settings
+	jQuery('#theMenu').Accordion({
+		active: 'h3.selected',
+		header: 'h3.head',
+		alwaysOpen: false,
+		animated: true,
+		showSpeed: 400,
+		hideSpeed: 800
+	});
+	jQuery('#xtraMenu1').Accordion({
+		active: 'h4.selected',
+		header: 'h4.head',
+		alwaysOpen: false,
+		animated: true,
+		showSpeed: 400,
+		hideSpeed: 800
+	});
+
+	jQuery('#xtraMenu2').Accordion({
+		active: 'h4.selected',
+		header: 'h4.head',
+		alwaysOpen: false,
+		animated: true,
+		showSpeed: 400,
+		hideSpeed: 800
+	});
+
+	jQuery('#xtraMenu3').Accordion({
+		active: 'h4.selected',
+		header: 'h4.head',
+		alwaysOpen: false,
+		animated: true,
+		showSpeed: 400,
+		hideSpeed: 800
+	});
+
+	jQuery('#subMenu').Accordion({
+		active: 'h6.selected',
+		header: 'h6.head',
+		alwaysOpen: false,
+		animated: true,
+		showSpeed: 400,
+		hideSpeed: 800
+	});
+	
+	jQuery('#DCKM').Accordion({
+		active: 'h6.selected',
+		header: 'h6.head',
+		alwaysOpen: false,
+		animated: true,
+		showSpeed: 400,
+		hideSpeed: 800
+	});
+
+});	
+</script>
+<body >
+<!-- BEGIN RENDER AUTO -->
+<%if(!geso.dms.center.util.GlobalValue.dev_mode){ %>
+	<noscript> 
+	 	<meta http-equiv="refresh" content="0;url=<%=getServletContext().getInitParameter("RedirectNoScript")  %>">
+		<!-- //window.location = "https://www.google.com"; -->
+	</noscript>
+<%} %>
+<!-- END RENDER AUTO -->
+
+
+		<ul id="theMenu" >
+			<li style="position: static;">
+				<h3 class="head" ><a href="Home.html" >Du lieu nen </a></h3>
+				<ul style="display: none;">
+					<li>
+                    	<ul id="xtraMenu1">
+                        	<li>
+                                <h4 class="head" id="dlncbId"><a href="Home.jsp" >Co ban </a></h4>
+                                <ul style="display: none;">
+								    <li>
+									<h5 class="head" id="nccId"><a href="../../NhacungcapSvl?userId=<%=userId %>"  target="content" >Nha Cung Cap</a></h5>
+									</li>
+                                    <li>
+									<h5 class="head" id="dvkdId"><a href="../../DonvikinhdoanhSvl?userId=<%=userId %>" target="content" >DV Kinh doanh</a></h5>
+									</li>
+									<li>
+									<h5 class="head" id="kbkId"><a href="../../KhoSvl?userId=<%=userId %>" target="content" >Kho</a></h5>
+									</li>
+                                </ul>
+                            </li>
+                            <li>
+                               <h4 class="head" id="dlnspId"><a href="Home.html">San pham</a></h4>
+                                <ul style="display: none;">
+								    <li>
+									<h5 class="head" id="nhId"><a href="../../NhanhangSvl?userId=<%=userId %>" target="content" >Nhan hang</a></h5>
+									</li>
+                                    <li>
+									<h5 class="head" id="clId"><a href="../../ChungloaiSvl?userId=<%=userId %>" target="content" >Chung loai</a></h5>
+									</li>
+									<li>
+									<h5 class="head" id="dvdlspId"><a href="../../DonvidoluongSvl?userId=<%=userId %>" target="content" >Don vi do luong </a></h5>
+									</li>
+									<li>
+									<h5 class="head" id="ttspId"><a href="../../ThongtinsanphamSvl?userId=<%=userId %>" target="content" >Thong tin san pham </a></h5>
+									</li>									
+									<li>
+									<h5 class="head" id="nspId"><a href="../../NhomsanphamSvl?userId=<%=userId %>" target="content" >Nhom san pham</a></h5>
+									</li>
+
+									<li>
+									<h5 class="head" id="bgblcId"><a href="../../BanggiabanlechuanSvl?userId=<%=userId %>" target="content" >Gia ban le chuan</a></h5>
+									</li>
+									<li>
+									<h5 class="head" id="bgmnppId"><a href="../../BanggiamuanppSvl?userId=<%=userId %>" target="content" >Gia ban cho NPP</a></h5>
+									</li>
+
+                                </ul>
+                            </li>
+							<li>
+                               <h4 class="head" id="dlnHtkdId"><a href="" >Kinh doanh </a></h4>
+                                <ul style="display: none;">
+                                     <li>
+									<h5 class="head" id="kbhId"><a href="../../KenhbanhangSvl?userId=<%=userId %>;userTen=<%= userTen %>" target="content" >Kenh ban hang</a></h5>
+									</li>
+									<li>
+									<h5 class="head" id="gsbhId"><a href="../../GiamsatbanhangSvl?userId=<%=userId %>;userTen=<%= userTen %>" target="content" >Giam sat ban hang</a></h5>
+									</li>									
+                                    <li>
+									<h5 class="head" id="lchId"><a href="../../LoaicuahangSvl?userId=<%=userId %>;userTen=<%= userTen %>" target="content" >Loai cua hang</a></h5>
+									</li>
+									<li>
+									<h5 class="head" id="hchId"><a href="../../HangcuahangSvl??userId=<%=userId %>;userTen=<%= userTen %>" target="content" >Hang cua hang</a></h5>
+									</li>
+									<li>
+									<h5 class="head" id="vtchId"><a href="../../VitricuahangSvl?userId=<%=userId %>;userTen=<%= userTen %>" target="content" >Vi tri cua hang</a></h5>
+									</li>
+									
+									<li>
+									<h5 class="head" id="nkhId"><a href="../../NhomkhachhangSvl?userId=<%=userId %>;userTen=<%= userTen %>" target="content" >Nhom khach hang</a></h5>
+									</li>
+									<li>
+									<h5 class="head" id="vmId"><a href="../../VungmienSvl?userId=<%=userId %>;userTen=<%= userTen %>" target="content" >Vung mien</a></h5>
+									</li>
+	<li>
+									<h5 class="head" id="kvId"><a href="../../KhuvucSvl?userId=<%=userId %>;userTen=<%= userTen %>" target="content" >Khu vuc</a></h5>
+								  </li>
+								<li>
+									<h5 class="head" id="nppId"><a href="../../NhaphanphoiSvl?userId=<%=userId %>;userTen=<%= userTen %>" target="content" >Nha phan phoi</a></h5>
+								  </li>
+								<li>
+									<h5 class="head" id="ddkdId"><a href="../../DaidienkinhdoanhSvl?userId=<%=userId %>;userTen=<%= userTen %>" target="content" >Dai dien kinh doanh</a></h5>
+								  </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+					
+				</ul>
+			</li>
+	
+			<li style="position: static;">
+				<h3 class="head " ><a href="" >Quan ly kho</a></h3>
+				<ul style="display: block;">
+					<li>
+                    	<ul id="xtraMenu">
+                        	<li>
+                                <h4 class="head" id="qltkId"><a href="../../DonmuahangSvl?userId=<%=userId %>" target="content" >Xu ly don hang </a></h4>                              
+							</li>	
+                            <li style="display:none;">
+								<h4 class="head" id="htNppId"><a href="../../DontrahangSvl?userId=<%=userId %>" target="content" >Xu ly hang tra</a></h4>
+							</li>        
+									
+							<li style="display:none;">
+								<h4 class="head" id="ddnId"><a href="../../DieuchinhtonkhoSvl?userId=<%=userId %>" target="content" >Duyet dieu chinh ton kho </a></h4>
+							</li> 
+						</ul>
+					</li>				
+				</ul>		
+			</li>
+		
+			<li style="position: static;display:none;">
+				<h3 class="head " ><a href="" >Xử lý đơn hàng</a></h3>
+				<ul style="display: block;">
+					<li>
+                    	<ul id="xtraMenu">
+                        	<li>
+                                <h4 class="head" ><a href="../../DonhangbanSvl?userId=<%=userId %>;userTen=<%= userTen %>" target="content" >Đơn hàng bán</a></h4>                              
+							</li>	
+                            <li>
+								<h4 class="head" ><a href="../../DonhangtraSvl?userId=<%=userId %>;userTen=<%= userTen %>" target="content" >Đơn hàng trả về</a></h4>
+							</li>        
+									
+							<li>
+								<h4 class="head" ><a href="" >Báo cáo </a></h4>
+							</li> 
+						</ul>
+					</li>				
+				</ul>		
+			</li>
+
+			<li style="position: static;display:none;">
+				<h3 class="head" ><a href="Home.html" >Quản lý khuyến mãi</a></h3>
+				<ul style="display: block;">
+					<li>
+                    	<ul id="xtraMenu">
+								<li>
+									<h4 class="head" id=""><a href="NhomKhuyenMai.html" target="content" >Nhóm khuyến mãi</a></h4>
+								</li>            
+	                            <li>
+                              		<h4 class="head" id=""><a href="ChuongTrinhKhuyenMai.html" target="content" >Chương trình khuyến mãi</a></h4>
+								</li>
+                                <li>
+									<h4 class="head" id=""><a href="PhanBoKhuyenMai_Vung.html" target="content" >Phân bổ khuyến mãi</a></h4>
+								</li>
+
+                                <li>
+									<h4 class="head"><a href="Home.html" target="content" >Điều chỉnh phân bổ</a></h4>
+	                                <ul style="display: block;">
+										<li> 
+											<h5 class="head" id="cgpbkm"><a href="CatGiamPhanBoKhuyenMai.html" target="content" >Cắt phân bổ </a></h5>
+										</li>
+            						    <li>
+											<h5 class="head" id="nvtpb"><a href="TaiPhanBoKhuyenMai.html" target="content" >Tái phân bổ</a></h5>
+										</li>
+									</ul>
+								</li>
+                                <li>
+									<h4 class="head" id=""><a href="home.html" target="content" >Báo cáo khuyến mãi</a></h4>
+								</li>        
+								
+						</ul>
+					</li>						
+				</ul>
+			</li>
+
+			<li style="position: static;display:none;">
+				<h3 class="head " ><a href="Home.html" >Quản lý trưng bày</a></h3>
+				<ul style="display: block;">
+					<li>
+									<h4 class="head" id=""><a href="BoSanPhamTrungBay.html" target="content" >Nhóm trưng bày</a></h4>
+								</li>            
+	                            <li>
+                              		<h4 class="head" id=""><a href="ChuongTrinhTrungBay.html" target="content" >Chương trình trưng bày</a></h4>
+								</li>
+                                <li>
+									<h4 class="head" id=""><a href="PhanBoTrungBay_Vung.html" target="content" >Phân bổ suất trưng bày</a></h4>
+								</li>
+                                <li>
+									<h4 class="head" id=""><a href="ThanhToanTrungBay.html" target="content" >Trả trưng bày</a></h4>
+								</li>
+                                <li>
+									<h4 class="head" id=""><a href="Home.html" target="content" >Báo cáo trưng bày</a></h4>
+								</li>        
+				</ul>
+			</li>
+
+			<li style="position: static;display:none;">
+				<h3 class="head" ><a href="Home.html" >Báo cáo quản trị</a></h3>
+				<ul style="display: block;">
+					<li>
+                    	<ul id="xtraMenu2">
+                        	<li>
+								<h4 class="head" id="bcds"><a href="DoanhSoHangTuan.html" target="content" onclick="JumpURL('DoanhSoHangTuan.html')">Theo dõi thành tích </a></h4>
+                    		</li>
+						</ul>
+					</li>						
+
+					<li>
+                    	<ul id="xtraMenu3">
+                        	<li>
+								<h4 class="head" id="bcds"><a href="Home.html" target="content" >Theo dõi doanh số </a></h4>
+								<ul style="display: none;">
+									            
+                		            <li>
+			                      		<h5 class="head" ><a href="Home.html"  target="content"> Doanh số hàng ngày</a></h5>
+									</li>
+                                		
+                		            <li>
+			                      		<h5 class="head" ><a href="Home.html"  target="content"> Doanh số hàng tuần</a></h5>
+									</li>
+
+                		            <li>
+			                      		<h5 class="head" ><a href="Home.html"  target="content"> Doanh số hàng tháng</a></h5>
+									</li>
+										
+                           		
+						    		<li>
+										<h5 class="head" ><a href="Home.html" target="content" >Cơ hội bán hàng</a></h5>
+									</li>        
+								</ul>
+                    		</li>
+						</ul>
+					</li>						
+
+				</ul>
+			</li>
+	</ul>
+
+</body></html>
+<%}%>

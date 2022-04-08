@@ -1,0 +1,215 @@
+html {
+	margin: 0;
+	padding: 0;
+}
+
+body {
+	margin: 5px;
+	padding: 0;
+	color: #000;
+	background-color: #fff;
+	font-family: "Trebuchet MS", Verdana, "Lucida Grande", Tahoma, Helvetica, Sans-Serif;
+}
+
+p, li, h2, h3, dd, dt {
+	font-size: 0.8em;
+	font-weight: normal;
+}
+blockquote {
+	border-width: 1px 1px 1px 8px;
+	border-style: solid;
+	border-color: #008000;
+	margin: 1em;
+	padding: 0 0.5em;
+	background: #d1f0af;
+	font-style: italic;
+}
+kbd {
+font-size : 1.1em;
+padding: 0px 2px;
+border: 1px solid gray;
+}
+
+h2, h3 {
+	font-size: 1em;
+	margin-top: 0;
+}
+
+h3 {
+	font-size: 1em;
+	font-weight: bold;
+	color: #006600;
+}
+
+
+a {
+	text-decoration: none;
+	color: #006600;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+h1#top {
+	position: absolute;
+	margin: 0px;
+	padding:0px;
+	text-indent: -5000px;
+	line-height: 1px;
+	font-size: 1px;
+}
+
+hr {
+	display: none;
+}
+
+pre {
+	border-width: 1px 1px 1px 8px;
+	border-style: solid;
+	border-color: #F0B802;
+	padding: 1em;
+	margin: 1em;
+	font-size: 110%;
+	background: #ffff99;
+	width: 95%;
+	overflow: hidden;
+}
+
+html>body pre {
+  overflow: auto;
+  width: auto;
+}
+
+ol li.current a
+{
+	text-decoration: none;
+	color: #000;
+}
+
+#easy-access, #easy-access a, #menutop, .cerise, #menuright, .cadre, .cadrebas, #menubas, #livres, #footer, ol.tree, .modified, #superpub, #xiti-logo
+{
+display: none
+}
+
+a img {
+border: none;
+}
+
+#content h2 {
+	position: relative;
+	color: #769712;
+	padding-bottom: 2px;
+	padding-left: 25px;
+	background-position:  0% 40%;
+	background-repeat: no-repeat;
+	font: bold 1.1em "Trebuchet MS", Verdana, "Lucida Grande", Tahoma, Helvetica, Sans-Serif;
+	background-image: url("design/puce.gif");
+	border-bottom: 1px solid #FFD62F;
+}
+
+#content h2 a {
+	color: #769712;
+}
+
+#content h2 a:hover {
+	text-decoration: none;
+	color: #cc9900;
+}
+
+ul {
+list-style-type: square;
+}
+
+.listing {
+	margin: 1em 0 1em 20px;
+	list-style-type: square;
+	color: #777;
+	padding: 0;
+	line-height:1.4em;
+}
+
+.listing a {
+	color: #777;
+}
+
+
+#content img {
+	border-width: 1px;
+	border-color: #ccc;
+	border-style: solid;
+	padding: 5px;
+	margin: 10px;
+}
+
+
+
+#page {
+	text-align: left;
+	margin: 10px 0 10px 0;
+	background: #fff;
+}
+
+
+
+.blog {
+	margin-bottom: 1em;
+	color: #777;
+}
+
+.blog p {
+	margin-bottom: 0;
+}
+
+.suiteblog {
+	font-size: 0.7em;
+	color: #008000;
+}
+
+p.modified {
+	font-size: 0.7em;
+	margin: -1em 1em -0.5em 1em;
+	text-align: right;
+	color: #008000;
+}
+
+p.modified a {
+	color: #008000;
+}
+
+
+input, textarea {
+	border: 1px solid #aaa;
+}
+
+.recherche {
+	width: 200px;
+	border: 1px solid #aaa;
+	font-size: 0.8em;
+}
+
+input[type], textarea[name] {
+	background: #fff;
+}
+
+input[type=submit], input[type=reset] {
+	background: #fff;
+	color: #000;
+}
+
+input[type=submit]:hover {
+	background: #999;
+	color: #fff;
+}
+
+
+
+/* ====================================================================
+COLUMNS LAYOUT
+-------------------------------------------------------------------- */
+#content
+{
+margin: 10;
+background: #fff;
+}
+

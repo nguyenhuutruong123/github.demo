@@ -1,0 +1,1057 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+	<script type="text/javascript" src="../scripts/Timepicker/jquery.min.js"></script>
+  	<script type="text/javascript" src="../scripts/Timepicker/jquery-ui.min.js"></script>
+	<script type="text/javascript" src="..scripts/jquery-1.js"></script>
+	<link type="text/css" rel="stylesheet" href="../css/mybutton.css">
+    <script type="text/javascript">
+        $(document).ready(function(){
+            $(".button").hover(function(){
+                $(".button img")
+                .animate({top:"-10px"}, 200).animate({top:"-4px"}, 200) // first jump
+                .animate({top:"-7px"}, 100).animate({top:"-4px"}, 100) // second jump
+                .animate({top:"-6px"}, 100).animate({top:"-4px"}, 100); // the last jump
+            });
+        }); 
+    </script>	
+	<script type="text/javascript">
+  		function keypress(e) //Hàm dùng d? ngan ngu?i dùng nh?p các ký t? khác ký t? s? vào TextBox
+  		{    
+  			var keypressed = null;
+  			if (window.event)
+  				keypressed = window.event.keyCode; //IE
+  			else
+  				keypressed = e.which; //NON-IE, Standard
+  			
+  			if (keypressed < 48 || keypressed > 57)
+  			{ 
+  				if (keypressed == 8 || keypressed == 127)
+  				{//Phím Delete và Phím Back
+  					return;
+  				}
+  				return false;
+  			}
+  		}
+  		
+  		function submitform()
+  		{  
+  		   document.forms['kmForm'].action.value='submit';
+  		   document.forms['kmForm'].submit();
+  		}
+  		 
+  		function saveform()
+ 		 { 			
+ 			
+	  			 if(checkSoluong() == false)
+	  			 {
+	  				 alert('Vui lòng điều chỉnh lại số lượng sản phẩm hoặc số xuất hưởng khuyến mãi');
+	  				 return;
+	  			 }
+	  			
+	  		
+	  		spList = document.getElementsByName("spSelectList");
+ 			for(k = 0; k < spList.length; k++)
+ 			{
+ 				if(spList.item(k).value == "")
+ 				{
+ 					alert("Vui lòng chọn sản phẩm trả khuyến mãi cho các xuất khuyến mãi được chọn..");
+ 					return;
+ 				}
+ 			 }
+
+ 			 if(checkSpIds() == false)
+ 			 {
+ 				 alert('Xin lỗi,bạn phải nhập số lượng của sản phẩm nhận được sau trả khuyến mãi ...\n(Vui lòng kiểm tra lại số lượng các sản phẩm sau khuyến mãi)');
+				 return;
+ 			 }
+ 			 
+ 			 //check ngan sach
+ 			 if(checkNganSach() == false)
+ 			 {
+ 				alert('Xin lỗi, ngân sách trả khuyến mại không thể vượt quá ngân sách chương trình ...\n(Vui lòng điều chỉnh lại số lượng các sản phẩm sau khuyến mãi)');
+				return;
+ 			 }
+ 			 
+ 			 document.getElementById("btnSave").innerHTML = "<a href='#'><img src='../images/waiting.gif'  title='cho thuc hien..' border='1' longdesc='cho thuc hien..' style='border-style:outset'> Processing...</a>";
+ 			 document.getElementById("btnSave30").innerHTML = "<a href='#'><img src='../images/waiting.gif'  title='cho thuc hien..' border='1' longdesc='cho thuc hien..' style='border-style:outset'> Processing...</a>";
+ 		  	 document.forms['kmForm'].action.value='save';
+ 		     document.forms['kmForm'].submit();
+ 		     
+ 		 }
+ 		 
+ 		 function checkNganSach()
+ 		 {
+ 			var ttTrakm = document.getElementsByName('ttTrakm');
+			var nganSachCtkm = document.getElementsByName('nganSachCtkm');
+			for(i = 0; i < ttTrakm.length; i++)
+			{	
+				if( (parseFloat(ttTrakm.item(i).value) > parseFloat(nganSachCtkm.item(i).value)) && (parseFloat(nganSachCtkm.item(i).value != -1)) )
+				{
+					return false;
+				}			
+			}
+			return true;
+ 		 }
+  		 
+  		function DieuChinh(idRow)
+		{
+			var content = document.getElementById('content');
+			var row = content.getElementsByTagName('tr');
+			for(i = 1; i < row.length; i++)
+			{
+				if(row.item(i).id == idRow)
+				{							
+					var columns = row.item(i).getElementsByTagName('td');	
+					var rowSpan = 1;
+					
+					if(columns.length == 11)
+						rowSpan = columns.item(1).getAttribute('rowspan');
+					else
+					{
+						if(columns.length == 6)
+							rowSpan = columns.item(0).getAttribute('rowspan');
+					}					
+					var sd = parseInt(i) + parseInt(rowSpan); //luu y khi cong gia tri kieu number trong javascript					
+					var soxuat = 0;				
+					var id_soxuat = idRow.substring(0, idRow.lastIndexOf('.'));
+					if(parseInt(document.getElementById(id_soxuat +'.soxuat').value) >= 0)
+						soxuat = parseInt(document.getElementById(id_soxuat + '.soxuat').value);
+			
+					// var old = document.getElementById(id_soxuat + '.hidden');						
+					for(j = i; j < sd; j++)
+					{
+						var column = row.item(j).getElementsByTagName('td');
+						var pos = 1;
+						if(column.length == 11)
+							pos = 3;
+						else
+						{
+							if(column.length == 6)
+								pos = 2;
+						}
+						var inp = column.item(pos).getElementsByTagName('input');						
+						if((parseInt(inp.item(1).value)  * soxuat) > parseInt(column.item(pos + 1).innerHTML))
+						{
+							alert('Số xuất bạn nhập không hơp lệ,vui lòng nhập số xuát nhỏ hơn');
+							document.getElementById(id_soxuat + '.soxuat').value = "";
+							return;
+						}						
+					}
+					
+					//dieu chinh lai tong soxuat					
+					var id_tsx = id_soxuat.substring(0, id_soxuat.lastIndexOf('.'));
+					var tsx = document.getElementById(id_tsx + '.tongsoxuat');	
+					
+					var start = document.getElementById(id_tsx + '.pos').value;
+					start = parseInt(start) + 1; //dong 0, header
+					var rowspan = document.getElementById(id_tsx + '.rowspan').value;
+					
+					//tinh lai tong so xuat khuyen mai
+					var tong_soxuat = 0;
+					for(h = 0; h < parseInt(rowspan); h++)
+					{
+						var index = parseInt(start) + parseInt(h);
+						var cols = row.item(index).getElementsByTagName('td');
+						
+						if(cols.length == 11)
+						{
+							var inp_soxuat = cols.item(6).getElementsByTagName('input');
+							tong_soxuat = parseInt(inp_soxuat.item(0).value);
+						}
+						else
+						{
+							if(cols.length == 6)
+							{
+								var inp_soxuat = cols.item(5).getElementsByTagName('input');
+								var inp_dong = cols.item(0).getElementsByTagName('input');
+								var pt = parseInt(inp_dong.item(1).value);
+								if(pt == 1) //phep AND
+									tong_soxuat = parseInt(tong_soxuat) > parseInt(inp_soxuat.item(0).value) ? parseInt(inp_soxuat.item(0).value) : parseInt(tong_soxuat);
+								else
+									tong_soxuat = parseInt(tong_soxuat) + parseInt(inp_soxuat.item(0).value);
+							}
+						}
+					}
+					tsx.value = parseInt(tong_soxuat) >= 0 ? parseInt(tong_soxuat) : 0;	
+					
+					//thoa dk slg sp < tong slg moi tien hanh dieu chinh lai slg su dung
+					var rowCount = parseInt(start) + parseInt(rowspan);
+					for( j = i; j < sd; j++)
+					{
+						var column = row.item(j).getElementsByTagName('td');
+						var pos = 1;
+						if(column.length == 11)
+							pos = 3;
+						else
+						{
+							if(column.length == 6)
+								pos = 2;								
+						}
+						input = column.item(pos).getElementsByTagName('input');
+						input.item(0).value = parseInt(soxuat) * parseInt(input.item(1).value);
+						column.item(pos+2).innerHTML = parseInt(column.item(pos+1).innerHTML) - parseInt(input.item(0).value);
+
+						var inps = column.item(pos - 1).getElementsByTagName('input');				
+						for( h = j+1; h < rowCount; h++)
+						{
+							var cols = row.item(h).getElementsByTagName('td');
+							var k = 0; 
+							if(cols.length == 11)
+								k = 2;
+							else
+							{
+								if(cols.length == 6)
+									k = 1;
+							}
+							var inp = cols.item(k).getElementsByTagName('input');	
+							if(inp.item(0).value == inps.item(0).value)
+							{
+								var tem = cols.item(k+1).getElementsByTagName('input');
+								cols.item(k+2).innerHTML = columns.item(pos+2).innerHTML;
+								cols.item(k+3).innerHTML = parseInt(cols.item(k+2).innerHTML) - tem.item(0).value;
+								if(parseInt(cols.item(k+3).innerHTML) < 0)
+								{
+									cols.item(k+3).innerHTML = cols.item(k+2).innerHTML;
+									tem.item(0).value = 0;
+								}
+								break;
+							}
+						}							
+					}
+															
+					//dieu chinh trakhuyenmai
+					if(document.getElementById(id_tsx + '.trakhuyenmai.type') != null)
+					{
+						var type = document.getElementById(id_tsx + '.trakhuyenmai.type').value;
+						var giatri = document.getElementById(id_tsx + '.trakhuyenmai.giatri').value;
+						var trakm = document.getElementById(id_tsx + '.trakhuyenmai');
+						var tonggiatridh = document.getElementById(id_tsx + '.tonggiatridh');
+						if(parseInt(type) == 1)
+							trakm.value = parseFloat(giatri) * parseInt(tsx.value);
+						else
+						{
+							if(parseInt(type) == 2)
+								trakm.value = (parseFloat(giatri)/100) * parseInt(tonggiatridh.value);
+							else
+								trakm.value = parseFloat(giatri) * parseInt(tsx.value);
+						}
+					}
+				}
+			}
+		}			
+  		
+  		function DieuChinh2(idRow) //truong hop tong tien
+		{
+			var content = document.getElementById('content');
+			var row = content.getElementsByTagName('tr');
+			for(i = 1; i < row.length; i++)
+			{
+				if(row.item(i).id == idRow)
+				{							
+					var columns = row.item(i).getElementsByTagName('td');	
+					var pos = 1; //luu vitri cua columns dang nhan nut
+					if(columns.length == 11)
+						pos = 3;
+					else
+					{
+						if(columns.length == 6)
+							pos = 2;
+					}					
+					var slg_sudung = 0;
+					if(parseInt(document.getElementById(idRow + '.sudung').value) >= 0)
+						slg_sudung = document.getElementById(idRow + '.sudung').value;
+					
+					var old_slg = document.getElementById(idRow + '.hidden');				
+					var sum = columns.item(pos+1).innerHTML;
+	
+					if( parseInt(slg_sudung) > parseInt(sum) )
+					{
+						alert('Số lượng sử dụng phải nhỏ hơn tổng số lượng hiện có');
+						document.getElementById(idRow + '.sudung').value = old_slg.value;
+						return;
+					}
+					var dongia = document.getElementById(idRow + '.dongia').value;
+					
+					var id_tgt = idRow.substring(0, idRow.lastIndexOf('.'));
+					var tongtien = document.getElementById(id_tgt + '.tongtien').value;
+					var old_tongGiatri = document.getElementById(id_tgt + '.tonggiatri');
+					var soxuat = document.getElementById(id_tgt + '.soxuat');				
+					old_tongGiatri.value = parseInt(old_tongGiatri.value) + ((slg_sudung - parseInt(old_slg.value)) * parseInt(dongia));
+					
+					var type = document.getElementById(id_tgt + '.type').value;
+					if(parseInt(type) == 1) //lay min (type = 1, dkkm bat buoc phai co day du cac sp)
+					{
+						var so_xuat = parseInt(parseInt(old_tongGiatri.value) / parseInt(tongtien));						
+						soxuat.value = parseInt(slg_sudung) > parseInt(so_xuat) ? parseInt(so_xuat) : parseInt(slg_sudung);						
+					}
+					else
+						soxuat.value = parseInt(parseInt(old_tongGiatri.value) / parseInt(tongtien));
+					
+					old_slg.value = slg_sudung;
+					
+					//dieu chinh lai tong soxuat					
+					var id_tsx = id_tgt.substring(0, id_tgt.lastIndexOf('.'));
+					var tsx = document.getElementById(id_tsx + '.tongsoxuat');	
+					
+					var start = document.getElementById(id_tsx + '.pos').value;
+					start = parseInt(start) + 1; //dong 0, header
+					var rowspan = document.getElementById(id_tsx + '.rowspan').value;
+					
+					//tinh lai tong so xuat khuyen mai
+					var tong_soxuat = 0;
+					for(h = 0; h < parseInt(rowspan); h++)
+					{
+						var index = parseInt(start) + parseInt(h);
+						var cols = row.item(index).getElementsByTagName('td');
+						
+						if(cols.length == 11)
+						{
+							var inp_soxuat = cols.item(6).getElementsByTagName('input');
+							tong_soxuat = parseInt(inp_soxuat.item(0).value);
+						}
+						else
+						{
+							if(cols.length == 6)
+							{
+								var inp_soxuat = cols.item(5).getElementsByTagName('input');
+								var inp_dong = cols.item(0).getElementsByTagName('input');
+								var pt = parseInt(inp_dong.item(1).value);
+								if(pt == 1) //phep AND
+									tong_soxuat = parseInt(tong_soxuat) > parseInt(inp_soxuat.item(0).value) ? parseInt(inp_soxuat.item(0).value) : parseInt(tong_soxuat);
+								else
+									tong_soxuat = parseInt(tong_soxuat) + parseInt(inp_soxuat.item(0).value);
+							}
+						}
+					}
+					tsx.value = parseInt(tong_soxuat);
+					
+					//dieu chinh slg con lai
+					columns.item(pos+2).innerHTML = parseInt(columns.item(pos+1).innerHTML) - parseInt(slg_sudung); 
+					
+					//slg con lai cua cac san pham ben duoi
+					var sd = parseInt(rowspan) + parseInt(start);
+					var inps = columns.item(pos - 1).getElementsByTagName('input');
+					for(j = i+1; j < sd; j++)
+					{
+						var cols = row.item(j).getElementsByTagName('td');
+						var k = 0; 
+						if(cols.length == 11)
+							k = 2;
+						else
+						{
+							if(cols.length == 6)
+								k = 1;
+						}
+						var inp = cols.item(k).getElementsByTagName('input');						
+						if(inp.item(0).value == inps.item(0).value)
+						{
+							var tem = cols.item(k+1).getElementsByTagName('input');
+							cols.item(k+2).innerHTML = columns.item(pos+2).innerHTML;
+							cols.item(k+3).innerHTML = parseInt(cols.item(k+2).innerHTML) - tem.item(0).value;
+							if(parseInt(cols.item(k+3).innerHTML) < 0)
+							{
+								cols.item(k+3).innerHTML = cols.item(k+2).innerHTML;
+								tem.item(0).value = 0;
+							}
+							break;
+						}					
+					}
+					
+					//dieu chinh trakhuyenmai
+					if(document.getElementById(id_tsx + '.trakhuyenmai.type') != null)
+					{
+						var type = document.getElementById(id_tsx + '.trakhuyenmai.type').value;
+						var giatri = document.getElementById(id_tsx + '.trakhuyenmai.giatri').value;
+						var trakm = document.getElementById(id_tsx + '.trakhuyenmai');
+						var tonggiatridh = document.getElementById(id_tsx + '.tonggiatridh');
+						if(parseInt(type) == 1)
+							trakm.value = parseFloat(giatri) * parseInt(tsx.value);
+						else
+						{
+							if(parseInt(type) == 2)
+								trakm.value = (parseFloat(giatri)/100) * parseInt(tonggiatridh.value);
+							else
+								trakm.value = parseFloat(giatri) * parseInt(tsx.value);
+						}
+					}
+				}
+			}			
+		}
+  		
+  		function DieuChinh3(idRow) //truong hop tong luong
+		{
+			var content = document.getElementById('content');
+			var row = content.getElementsByTagName('tr');
+			for(i = 1; i < row.length; i++)
+			{
+				if(row.item(i).id == idRow)
+				{							
+					var columns = row.item(i).getElementsByTagName('td');	
+					var pos = 1; //luu vitri cua columns dang nhan nut
+					if(columns.length >= 11)
+						pos = 3;
+					else
+					{
+						if(columns.length == 6)
+							pos = 2;
+					}
+					
+					var slg_sudung = 0;
+					var idSlg_sudung = document.getElementById(idRow + '.sudung');
+					if(idSlg_sudung != null)
+					{
+						if(parseInt(idSlg_sudung.value) >= 0)
+							slg_sudung = document.getElementById(idRow + '.sudung').value;
+					}
+					//alert(slg_sudung);
+
+					var old_slg = document.getElementById(idRow + '.hidden');				
+					var sum = columns.item(pos+1).innerHTML;
+	
+					if( parseInt(slg_sudung) > parseInt(sum) )
+					{
+						alert('Số lượng sử dụng phải nhỏ hơn tổng số lượng hiện có ');
+						document.getElementById(idRow + '.sudung').value = old_slg.value;
+						return;
+					}
+					
+					var id_tongluong = idRow.substring(0, idRow.lastIndexOf('.'));
+					var tongluong = document.getElementById(id_tongluong + '.tongluong').value;
+					var old_tongSoluong = document.getElementById(id_tongluong + '.tongsoluong');
+					var soxuat = document.getElementById(id_tongluong + '.soxuat');
+										
+					old_tongSoluong.value = parseInt(old_tongSoluong.value) + (slg_sudung - parseInt(old_slg.value));
+														
+					var type = document.getElementById(id_tongluong + '.type').value;
+					if(parseInt(type) == 1)
+					{
+						var so_xuat = parseInt(parseInt(old_tongSoluong.value) / parseInt(tongluong));						
+						soxuat.value = parseInt(slg_sudung) > parseInt(so_xuat) ? parseInt(so_xuat) : parseInt(slg_sudung);	
+					}
+					else
+						soxuat.value = parseInt(parseInt(old_tongSoluong.value) / parseInt(tongluong));
+					
+					old_slg.value = slg_sudung;
+					
+					//dieu chinh lai tong soxuat					
+					var id_tsx = id_tongluong.substring(0, id_tongluong.lastIndexOf('.'));
+					var tsx = document.getElementById(id_tsx + '.tongsoxuat');	
+					
+					var start = document.getElementById(id_tsx + '.pos').value;
+					start = parseInt(start) + 1; //dong 0, header
+					var rowspan = document.getElementById(id_tsx + '.rowspan').value;
+								
+					//tinh lai tong so xuat khuyen mai
+					var tong_soxuat = 0;
+					for(h = 0; h < parseInt(rowspan); h++)
+					{
+						var index = parseInt(start) + parseInt(h);
+						var cols = row.item(index).getElementsByTagName('td');
+						
+						if(cols.length >= 11)
+						{
+							var inp_soxuat = cols.item(6).getElementsByTagName('input');
+							tong_soxuat = parseInt(inp_soxuat.item(0).value);
+						}
+						else
+						{
+							if(cols.length == 6)
+							{
+								var inp_soxuat = cols.item(5).getElementsByTagName('input');
+								var inp_dong = cols.item(0).getElementsByTagName('input');
+								var pt = parseInt(inp_dong.item(1).value);
+								if(pt == 1) //phep AND
+									tong_soxuat = parseInt(tong_soxuat) > parseInt(inp_soxuat.item(0).value) ? parseInt(inp_soxuat.item(0).value) : parseInt(tong_soxuat);
+								else
+									tong_soxuat = parseInt(tong_soxuat) + parseInt(inp_soxuat.item(0).value);
+							}
+						}
+					}
+					tsx.value = parseInt(tong_soxuat);
+									
+					//dieu chinh slg con lai
+					columns.item(pos+2).innerHTML = parseInt(columns.item(pos+1).innerHTML) - parseInt(slg_sudung); 
+					
+					//slg con lai cua cac san pham ben duoi
+					var sd = parseInt(rowspan) + parseInt(start);
+					var inps = columns.item(pos - 1).getElementsByTagName('input');
+					for(j = i+1; j < sd; j++)
+					{
+						var cols = row.item(j).getElementsByTagName('td');
+						var k = 0; 
+						if(cols.length >= 11)
+							k = 2;
+						else
+						{
+							if(cols.length == 6)
+								k = 1;
+						}
+						var inp = cols.item(k).getElementsByTagName('input');					
+						if(inp.item(0).value == inps.item(0).value)
+						{
+							alert('abbc');
+							var tem = cols.item(k+1).getElementsByTagName('input');
+							cols.item(k+2).innerHTML = columns.item(pos+2).innerHTML;
+							cols.item(k+3).innerHTML = parseInt(cols.item(k+2).innerHTML) - tem.item(0).value;
+							if(parseInt(cols.item(k+3).innerHTML) < 0)
+							{
+								cols.item(k+3).innerHTML = cols.item(k+2).innerHTML;
+								tem.item(0).value = 0;
+							}
+							break;
+						}					
+					}
+					/*
+					//dieu chinh trakhuyenmai
+					if(document.getElementById(id_tsx + '.trakhuyenmai.type') != null)
+					{
+						var type = document.getElementById(id_tsx + '.trakhuyenmai.type').value;
+						var giatri = document.getElementById(id_tsx + '.trakhuyenmai.giatri').value;
+						var trakm = document.getElementById(id_tsx + '.trakhuyenmai');
+						var tonggiatridh = document.getElementById(id_tsx + '.tonggiatridh');
+						if(parseInt(type) == 1)
+							trakm.value = parseFloat(giatri) * parseInt(tsx.value);
+						else
+						{
+							if(parseInt(type) == 2)
+								trakm.value = (parseFloat(giatri)/100) * parseInt(tonggiatridh.value);
+							else
+								trakm.value = parseFloat(giatri) * parseInt(tsx.value);
+						}
+					}
+					*/
+				}
+			}
+		}
+  		
+  		function DieuChinhTraKM(optionId)
+  		{
+  			var id = document.getElementById(optionId);
+  			
+			for(i=0; i < id.length; i++)
+			{
+				if(id.options[i].selected)
+				{
+					//alert(id.options[i].value);	
+					var sanphamId = document.getElementById(optionId + '.Id');
+					//var id_tgt = optionId.substring(0, optionId.indexOf('.'));
+					//var tongluong = document.getElementById(id_tgt + '.trakhuyenmai.tongluong');
+					//var soxuat = document.getElementById(id_tgt + '.tongsoxuat');
+					//var tonggiatriTrakm = document.getElementById(id_tgt + '.trakhuyenmai');
+								
+					//tonggiatriTrakm.value = parseInt(soxuat.value) * parseFloat(id.options[i].value) * parseInt(tongluong.value);
+					//sanphamId.value = id.options[i].innerHTML;
+					sanphamId.value = id.options[i].value;
+				}
+			}
+			//checkNganSach();
+  		}
+  		
+  		function TinhTongSanPham(masp)
+		{
+			var sl = 0;
+			var content = document.getElementById('content');
+			var row = content.getElementsByTagName('tr');
+			for(i = 1; i < (parseInt(row.length)-1); i++)
+			{
+				var columns = row.item(i).getElementsByTagName('td');				
+				var pos = 0;
+				if(columns.length == 11)
+					pos = 2;
+				else
+				{
+					if(columns.length == 6)
+						pos = 1;
+				}			
+				if(parseInt(columns.item(pos).getElementsByTagName('input').length) > 0)
+				{
+					var inp_sp = columns.item(pos).getElementsByTagName('input');					
+					if(inp_sp.item(0).value == masp)
+					{				
+						var inp_slg = columns.item(pos + 1).getElementsByTagName('input');
+						sl =  parseInt(sl) + parseInt(inp_slg.item(0).value);
+					}
+				}
+			}
+			//alert('So luong la: ' + sl);
+			return sl;
+		}
+  		
+  		function checkSoluong()
+  		{
+  			var content = document.getElementById('content');
+			var row = content.getElementsByTagName('tr');
+  			var spList = document.getElementsByName('sanphamList');
+  			
+  			var flag = true;
+  			for( k = 0; k < spList.length; k++)
+  			{
+  				var sp = spList.item(k).value;
+  				var name = sp.substring(0, sp.indexOf('--'));
+  				var soluong = sp.substr(sp.indexOf('--') + 2);
+  				
+  				if(TinhTongSanPham(name) > parseInt(soluong))
+  				{
+  					changeBackground('#CFF', name);
+  					flag = false;
+  				}	
+  				else
+  					changeBackground('#E6E6E6', name);
+  			}
+  			return flag;
+  		}
+  		
+  		function changeBackground(color, name)
+  		{
+  			var content = document.getElementById('content');
+			var row = content.getElementsByTagName('tr');
+  			for(l = 1; l < (parseInt(row.length)-1); l++)
+			{
+				var columns = row.item(l).getElementsByTagName('td');
+				var pos = 0;
+				if(columns.length == 11)
+					pos = 2;
+				else
+				{
+					if(columns.length == 6)
+						pos = 1;
+				}
+				//alert(columns.item(pos).innerHTML);
+				if(columns.item(pos).getElementsByTagName('input').length > 0)
+				{
+					var input = columns.item(pos).getElementsByTagName('input');
+					if(input.item(0).value == name)
+					{
+ 						columns.item(pos).style.backgroundColor = color;
+ 						columns.item(pos + 1).style.backgroundColor = color;
+ 						//columns.item(pos + 2).style.backgroundColor = "#CFF";
+					}	
+				}
+			}
+  		}
+  
+  		function checkSpIds() //kiem tra ma san pham tra km da duoc chon so luong hay chua
+		{
+			var sp = document.getElementsByName('spSelected');
+			var trakmType = document.getElementsByName('traKmType');
+			for(i = 0; i < sp.length; i++)
+			{	
+				if(trakmType.item(i).value == "3-2") //tra km: type = 3; hinhthuc=2
+				{
+					if(sp.item(i).value == "")
+						return false;
+				}			
+			}
+			return true;
+		}
+  		
+  		function Auto(checkId)
+  		{
+  			var chkId = document.getElementById(checkId);
+  			var idTlg = checkId.substring(0, checkId.lastIndexOf("."));
+  			
+  			var k = document.getElementById(idTlg + ".tongluong").value;  			
+  			var slg = document.getElementsByName(idTlg + ".soluong");
+  			var masp = document.getElementsByName(idTlg + ".maspTraKm");
+  			var dgiaSpTraKm = document.getElementsByName(idTlg + ".dongiaSpTraKm");
+  			
+  			var idTkm = idTlg.substring(0, idTlg.indexOf("."));
+  			
+  			spIds = idTlg.substring(0, idTlg.indexOf("."));
+  			var sanphamId = document.getElementById(spIds + '.trakhuyenmai.sanpham.Id');
+  			
+  			var tongsotien = 0;
+  			sanphamId.value = ""; //khoi tao lai
+  			if(chkId.checked)
+			{
+  				for(i = 0; i < slg.length; i++)
+  				{
+  					slg.item(i).value = "";
+  					slg.item(i).setAttribute("readonly", "readonly");
+  				}
+  				slg.item(0).value = k;
+  				sanphamId.value = masp.item(0).value + '-' + k;	//luu lai sp chon, soluong tuong ung
+  				//alert(sanphamId.value);
+  				
+  				//tinh tong gia tri
+  				tongsotien = parseFloat(tongsotien) + parseInt(k) * parseFloat(dgiaSpTraKm.item(0).value);
+  				document.getElementById(idTkm + ".trakhuyenmai").value = Math.round(tongsotien);
+			}
+  			else
+			{
+  				for(i = 0; i < slg.length; i++)
+  				{
+  					slg.item(i).value = "";
+  					slg.item(i).removeAttribute("readonly");
+  				}
+  				sanphamId.value = "";
+  				document.getElementById(idTkm + ".trakhuyenmai").value = "";
+			}
+  		}
+  		
+  		function checkSlgTraKm(name)
+  		{
+  			var slg = document.getElementsByName(name);
+  			var idTlg = name.substring(0, name.lastIndexOf("."));
+  			var k = document.getElementById(idTlg + ".tongluong").value;
+  			var masp = document.getElementsByName(idTlg + ".maspTraKm");
+  			var dgiaSpTraKm = document.getElementsByName(idTlg + ".dongiaSpTraKm");
+  			
+  			var idTkm = idTlg.substring(0, idTlg.indexOf("."));
+  			
+  			spIds = idTlg.substring(0, idTlg.indexOf("."));
+  			var sanphamId = document.getElementById(spIds + '.trakhuyenmai.sanpham.Id');
+  			
+  			var tongsotien = 0;
+  			var sum = 0;
+  			//alert(slg.length + ' --- ' + k);
+  			sanphamId.value = "";
+  			for(i = 0; i < slg.length; i++)
+  			{
+  				if(slg.item(i).value != '')
+  				{
+  					sum = parseInt(sum) + parseInt(slg.item(i).value);
+  					tongsotien = parseFloat(tongsotien) + parseInt(slg.item(i).value) * parseFloat(dgiaSpTraKm.item(i).value);
+  				}
+  				if(parseInt(sum) > parseInt(k))
+  				{
+  					tongsotien = parseFloat(tongsotien) - parseInt(slg.item(i).value) * parseFloat(dgiaSpTraKm.item(i).value);
+  					slg.item(i).value = "";
+  					document.getElementById(idTkm + ".trakhuyenmai").value = Math.round(tongsotien);
+  					alert('Số lượng bạn nhập vào,lớn hơn tổng số lượng trả khuyến mãi (' + k + '), Vui lòng nhập lại ...');
+  					return;
+  				}
+  				if(slg.item(i).value != "")
+  					sanphamId.value = sanphamId.value + masp.item(i).value + '-' + slg.item(i).value + ";";
+  			}
+
+  			document.getElementById(idTkm + ".trakhuyenmai").value = Math.round(tongsotien);
+  			if(sanphamId.value != "")
+  				sanphamId.value = sanphamId.value.substring(0, sanphamId.value.length - 1); //cat dau ; cuoi cung
+  		}
+  		
+  		function thongbao()
+  		{
+  			var tt = document.forms['kmForm'].msg.value;
+  			if(tt.length>0)
+  		    {
+  				alert(tt);
+  		   }
+  		}
+  </script>
+  <LINK rel="stylesheet" href="../css/main.css" type="text/css">
+  <link rel="stylesheet" type="text/css" href="../css/speechbubbles.css" />
+  <!-- <link rel="stylesheet" type="text/css" href="../css/cool_DHTML_tooltip.css" /> -->
+
+  <script type="text/javascript" src="../scripts/jquery.min.js"></script>
+  <script type="text/javascript" src="../scripts/speechbubbles.js"></script>
+  <script type="text/javascript" src="../scripts/cool_DHTML_tootip.js"></script>
+  <script type="text/javascript">	
+	jQuery(function($)
+	{ 
+		 $('.addspeech').speechbubble();
+	})
+  </script>
+  <style type="text/css">
+	#dhtmltooltip
+	{
+		position: absolute;
+		left: -300px;
+		width: 150px;
+		border: 1px solid black;
+		padding: 2px;
+		background-color: lightyellow;
+		visibility: hidden;
+		z-index: 100;
+		
+		/*Remove below line to remove shadow. Below line should always appear last within this CSS*/
+		filter: progid:DXImageTransform.Microsoft.Shadow(color=gray,direction=135);
+	}	
+	#dhtmlpointer
+	{
+		position:absolute;
+		left: -300px;
+		z-index: 101;
+		visibility: hidden;
+	}	
+	
+  </style>
+  <!-- <link href="jquery-ui.css" rel="stylesheet" type="text/css"/>-->
+  <script type="text/javascript" src="../scripts/Sortable/jquery.min.js"></script>
+  <script type="text/javascript" src="../scripts/Sortable/jquery-ui.min.js"></script>
+  
+  <script>
+	  $(document).ready(function() {
+		$("#sortable").sortable();
+	  });
+  </script> 
+
+<!-- BEGIN RENDER AUTO -->
+
+<% if (!geso.dms.center.util.GlobalValue.dev_mode) { %>
+	<script type="text/javascript" src="../scripts/disableF12.js"></script>
+<% } %>
+
+<!-- END RENDER AUTO -->
+</head>
+
+<body style="margin-left:3px">
+<!-- BEGIN RENDER AUTO -->
+<%if(!geso.dms.center.util.GlobalValue.dev_mode){ %>
+	<noscript> 
+	 	<meta http-equiv="refresh" content="0;url=<%=getServletContext().getInitParameter("RedirectNoScript")  %>">
+		<!-- //window.location = "https://www.google.com"; -->
+	</noscript>
+<%} %>
+<!-- END RENDER AUTO -->
+
+
+<form name="kmForm" method="post" action="../../KhuyenmaiSvl"> 
+ <% geso.dms.center.util.Csrf csdr=new geso.dms.center.util.Csrf(request,response,true,false,true);%> <input type="hidden" name="<%=csdr.get_tokenName() %>" value='<%=csdr.get_tokenValue() %>'>
+<input type="hidden" name="userId" value='100065'>
+<input type="hidden" name="nppId" value='102433'>
+<input type="hidden" name="action" value='1'>
+<INPUT type="hidden" name="dhId" value='6258976'>
+<INPUT type="hidden" name="ngaygiaodich" value='2012-07-20'>
+<INPUT type="hidden" name="tonggiatri" value='1520000.0'>
+<input type="hidden" name="khachhang" value='254201'>
+
+<input type="hidden" name="msg" value=''>
+<script type="text/javascript">
+  thongbao();
+</script>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<tr height="25px">
+		<TD align="left" colspan="2" class="tbnavigation">&nbsp;Đơn hàng > Áp khuyễn mãi > Điều chỉnh</TD>
+		<TD colspan="2" align="right" class="tbnavigation">Chào mừng nhà phân phối   CTY CP XD & TM KIEN PHAT &nbsp;</TD>
+	</tr>
+</table>
+<table width="100%" border="0" cellpadding="0" cellspacing="0">
+	<TR class="tbdarkrow">
+		<TD align="left" width="30"><A href = "../../DonhangUpdateSvl?userId=100065&update=6258976"><img src="../images/Back30.png" alt="Quay ve"  title="Quay ve" border="1" longdesc="Quay ve" style="border-style:outset"></A></TD>
+	    <TD align="left" width="30">
+	    <div id="btnSave30">
+	    <A href="javascript:saveform()" ><img src="../images/Save30.png" alt="Luu lai"  title="Luu lai" border="1" longdesc="Luu lai" style="border-style:outset"></A>
+	    </div>
+	    </TD>
+	    <TD></TD>
+	</TR>
+</table>
+ <fieldset  >
+ 	<legend class="legendtitle">Di chuyển mã chương trình khuyễn mãi(CTKM) bạn muốn ưu tiên</legend>
+ 	<table class="plainlabel" width="100%" border="0" cellspacing="1" cellpadding="2">
+ 	<tr height="8px"><td></td></tr>
+ 	<tr><td>
+    <ul id="sortable" style="cursor:pointer; width:60%">    
+    
+		<li onMouseOver="this.style.color='#F00'" onMouseOut="this.style.color='#000'">Test KM nhieu dk - Test KM 
+			<input type="hidden" name="Scheme" value="Test KM nhieu dk"></li>
+         	
+    </ul></td></tr>
+    
+    	<tr><td><input type="checkbox" name="ShowAll"  value='0' onchange="submitform()">Hiện tất cả các xuất khuyến mãi  ( tối đa ) có thể đạt được của đơn hàng</td></tr>
+    
+    </table>
+</fieldset>
+
+<fieldset>
+	<legend><span class="legendtitle"> Danh sách hương trình khuyến mãi (CTKM) thỏa điều kiện </span>&nbsp;&nbsp;&nbsp;
+         <a class="button" href="javascript:submitform()">
+              Hiển thị danh sách <img style="top: -4px;" src="../images/New.png" alt=""></img></a>
+    </legend>
+    <table class="tabledetail" id="content" width="100%" border="0" cellspacing="1" cellpadding="2">
+    	<tr class="tbheader">
+        	<th width="10%"  align="center">Mã CTKM</th>
+            <th width="7%" align="center" style="display: none">Điều kiện</th>
+            <th width="17%" align="center">Sản phẩm</th>
+            <th width="7%" align="center">Sử dụng</th>
+            <th width="10%" align="center">Tổng Số lượng</th>
+            <th width="7%" align="center">Còn lại</th>
+            <th width="5%" align="center">Số xuất</th>
+            <th width="7%" align="center" style="display: none">Số xuất/Mã CTKM</th>
+            <th width="15%" align="center">Trả khuyến mãi</th>
+            <th width="8%" align="center">Tổng giá trị</th>
+            <th width="8%" align="center">Ngân sách</th>
+        </tr>
+              
+								<tr class="tbdarkrow" id="Test KM nhieu dk.100193.0101010260319">
+								
+					        	<td rowspan="2" align="center">
+					        		Test KM nhieu dk
+					        		<input type="hidden" id="Test KM nhieu dk.pos" value="0" />
+					        		<input type="hidden" id="Test KM nhieu dk.rowspan" value="2" />
+					        		<input type="hidden" name="schemeList" value="257044" />
+					        		<input type="hidden" name="schemeDiengiai" value="Test KM" />
+					        	</td>					        						        	
+					            <td rowspan="2" align="center" style="display: none;">
+					            	<div class="addspeech" title="Mua 318 hoac 319 la 10" >100193
+					            	
+					            	 </div>
+					            	<input type="hidden" id="Test KM nhieu dk.100193.type" value="2" />
+					            	<input type="hidden" id="Test KM nhieu dk.100193.pheptoan" value="0" />
+					            </td> 
+					            					                      
+					            <td align="left">					    
+					            	
+					            		<span>DG X-Men Active 180g New</span>
+					            	
+					            	</div>
+					            	<input type="hidden" value="0101010260319" />
+					            	<input type="hidden" id="Test KM nhieu dk.100193.0101010260319.dongia" value="34545.45" />
+					            </td>
+					                        					           				
+           						
+       								<td align="center">
+       									
+       										<input type="text" id="Test KM nhieu dk.100193.0101010260319.sudung" size="5" value="10" onkeypress="return keypress(event);" onkeyup="DieuChinh3('Test KM nhieu dk.100193.0101010260319')"/>
+       									
+       									<input type="hidden" id="Test KM nhieu dk.100193.0101010260319.hidden" value="10" />
+       								</td>
+	       						
+	       						           						          						
+            					<td align="center">10</td>
+            					<td align="center">0</td>
+            				           								            				         					          					            
+					       
+					            	<td rowspan="2" align="center">
+					            		<input id="Test KM nhieu dk.100193.soxuat" type="text" size="5" disabled="disabled" value="4" />
+					            		<input id="Test KM nhieu dk.100193.hidden" type="hidden" size="5" value="4"/>
+					            		<input id="Test KM nhieu dk.100193.tongtien" type="hidden" value="0.0"/>
+					            		<input id="Test KM nhieu dk.100193.tonggiatri" type="hidden" value="1381818.0"/>
+					            		<input id="Test KM nhieu dk.100193.tongluong" type="hidden" value="10"/>
+					            		<input id="Test KM nhieu dk.100193.tongsoluong" type="hidden" value="40"/>
+					            	</td>
+           						
+           						
+           						<td rowspan="2" align="center" style="display: none">
+           							<input id="Test KM nhieu dk.tongsoxuat" type="text" size="5" value="4" name="soxuatKM" readonly/>
+           						</td>
+           						<td rowspan="2" align="center" style="padding:0px">
+           						
+                                		<div style="width:100%; height:5px"></div>
+           								<a class="addspeech" href="" title="Test Co dinh" onclick="return false;" >111509</a>
+                                        <div style="width:100%; height:5px"></div>
+           								<input id="Test KM nhieu dk.trakhuyenmai.type" type="hidden" value="3"/>
+           								
+	           								<input id="Test KM nhieu dk.trakhuyenmai.giatri" type="hidden" value="3520.0"/>
+           								
+           								<input type="hidden" name="trakmId" value="111509" />
+           								<input type="hidden" name="trakmType" value="3" />
+           								<input type="hidden" name="trakmHinhThuc" value="1" />
+           							           								
+           								<fieldset>
+           								<legend><a class="addspeech" href="" title="Test bat ky trong" onclick="return false;">111510 <b> - Tổng lượng KM 40</b></a></legend>
+           								
+           											
+   											<p><span onMouseover="ddrivetip('DG X-Men Sport 180g New - Giá 32127.0', 300)"; onMouseout="hideddrivetip()" style="font-size:10pt;">0101010160318</span> &nbsp;
+   											<input type="text" size="7" value="" style="text-align:right; width: 50px" name="Test KM nhieu dk.111509.soluong" onkeyup="checkSlgTraKm('Test KM nhieu dk.111510.soluong')"></p>
+   											<input type="hidden" value="32127.0" name="Test KM nhieu dk.111510.dongiaSpTraKm">
+   											<input type="hidden" value="0101010160318" name="Test KM nhieu dk.111510.maspTraKm">
+	           										
+   											<p><span onMouseover="ddrivetip('DG X-Men Active 6g New - Giá 704.0', 300)"; onMouseout="hideddrivetip()" style="font-size:10pt;">0101010260316</span> &nbsp;
+   											<input type="text" size="7" value="" style="text-align:right; width: 50px" name="Test KM nhieu dk.111509.soluong" onkeyup="checkSlgTraKm('Test KM nhieu dk.111510.soluong')"></p>
+   											<input type="hidden" value="704.0" name="Test KM nhieu dk.111510.dongiaSpTraKm">
+   											<input type="hidden" value="0101010260316" name="Test KM nhieu dk.111510.maspTraKm">
+	           							
+           									<input type="checkbox" id="Test KM nhieu dk.111510.auto" onchange="Auto('Test KM nhieu dk.111510.auto')"><i style="font-size:0.7em"> Tự động chọn</i>
+           									<input type="hidden" id="Test KM nhieu dk.111510.tongluong" value="40">			           								     								
+           								</fieldset>
+           								<input id="Test KM nhieu dk.trakhuyenmai.tongluong" type="hidden" value="10"/>
+           								<input type="hidden" name="trakmId" value="111510" />
+           								<input type="hidden" name="trakmType" value="3" />
+           								<input type="hidden" name="trakmHinhThuc" value="2" />
+           							
+           						</td>
+           						
+					            <td rowspan="2" align="center">
+					               	 
+					            		<input type="text" id="Test KM nhieu dk.trakhuyenmai" size="12" value="14080" readonly name="ttTrakm" />
+					            	
+					            	<input type="hidden" id="Test KM nhieu dk.tonggiatridh"  value="1520000.0" />
+					            	<input type="hidden" name="spSelected" value="" id="Test KM nhieu dk.trakhuyenmai.sanpham.Id"/>
+					            	<input type="hidden" name="traKmType" value="3-1"/>
+					            </td>
+					             <td rowspan="2" align="center">
+					            	2147483647
+					            	<input type="hidden" name = "nganSachCtkm" value="2147483647" />
+					            </td>
+					            
+						        </tr>
+						        
+							
+							<tr class="tbdarkrow" id="Test KM nhieu dk.100193.0101010160318">							
+            				<td align="left">
+				            	
+				            		<span>DG X-Men Sport 180g New</span>
+				            	
+				            	<input type="hidden" value="0101010160318" />
+				            	<input type="hidden" id="Test KM nhieu dk.100193.0101010160318.dongia" value="34545.45" />
+					        </td>
+					            
+            				
+   								<td align="center">
+  									
+  										<input type="text" id="Test KM nhieu dk.100193.0101010160318.sudung" size="5" value="30" onkeypress="return keypress(event);" onkeyup="DieuChinh3('Test KM nhieu dk.100193.0101010160318')"/>
+  									
+  									<input type="hidden" id="Test KM nhieu dk.100193.0101010160318.hidden" value="30" />
+  								</td>
+       						   				
+          					<td align="center">30</td>         				
+           					<td align="center">0</td>   
+           					        				
+        					</tr>
+					
+        <TR>
+			<TD align="center" colspan="11" class="tbfooter">&nbsp; &nbsp;</TD>
+		</TR>
+		<tr>
+			<td colspan="11" align="left">
+			
+			<div id="btnSave">
+			<a class="button" href="javascript:saveform()">
+              Lưu lại <img style="top: -4px;" src="../images/New.png" alt=""></img></a>
+              </div>
+            </td>
+		</tr>
+    </table>
+    
+    	<input type="hidden" name="sanphamList" value="0101010260319--10" >
+    
+    	<input type="hidden" name="sanphamList" value="0101010160318--30" >
+    
+    
+    	<input type="hidden" name="spMa" value="0101010160318" >
+    	<input type="hidden" name="spDongia" value="34545.45" >
+    	<input type="hidden" name="spSoluong" value="30" >
+    
+    	<input type="hidden" name="spMa" value="0101010260319" >
+    	<input type="hidden" name="spDongia" value="34545.45" >
+    	<input type="hidden" name="spSoluong" value="10" >
+    
+</fieldset>
+</form>
+</body>
+</html>
+
