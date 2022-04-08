@@ -1,0 +1,117 @@
+
+
+/****** Object:  Table [dbo].[ThayDoiKM_SanPham]    Script Date: 02/13/2014 09:56:22 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[ThayDoiKM_SanPham](
+	[ThayDoiKM_FK] [numeric](18, 0) NULL,
+	[SanPham_FK] [numeric](18, 0) NULL,
+	[SoLuong] [int] NULL,
+	[SoTien] [numeric](18, 0) NULL,
+	[BatBuoc] [int] NULL,
+	[DonGia] [numeric](18, 0) NULL,
+ CONSTRAINT [uni_ThayDoiKM_SanPham] UNIQUE NONCLUSTERED 
+(
+	[SanPham_FK] ASC,
+	[ThayDoiKM_FK] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[ThayDoiKM_SanPham]  WITH CHECK ADD  CONSTRAINT [FK_ThayDoiKM_SanPham_SanPham] FOREIGN KEY([SanPham_FK])
+REFERENCES [dbo].[SANPHAM] ([PK_SEQ])
+GO
+
+ALTER TABLE [dbo].[ThayDoiKM_SanPham] CHECK CONSTRAINT [FK_ThayDoiKM_SanPham_SanPham]
+GO
+
+ALTER TABLE [dbo].[ThayDoiKM_SanPham]  WITH CHECK ADD  CONSTRAINT [FK_ThayDoiKM_SanPham_ThayDoiKM] FOREIGN KEY([ThayDoiKM_FK])
+REFERENCES [dbo].[ThayDoiKM] ([PK_SEQ])
+GO
+
+ALTER TABLE [dbo].[ThayDoiKM_SanPham] CHECK CONSTRAINT [FK_ThayDoiKM_SanPham_ThayDoiKM]
+GO
+
+
+
+/****** Object:  Table [dbo].[ThayDoiKM_CTKM]    Script Date: 02/13/2014 09:57:45 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+CREATE TABLE [dbo].[ThayDoiKM_CTKM](
+	[ThayDoiKM_FK] [numeric](18, 0) NOT NULL,
+	[CTKM_FK] [numeric](18, 0) NOT NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[ThayDoiKM_FK] ASC,
+	[CTKM_FK] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+ALTER TABLE [dbo].[ThayDoiKM_CTKM]  WITH CHECK ADD  CONSTRAINT [FK_ThayDoiKM_CTKM_CTKM] FOREIGN KEY([CTKM_FK])
+REFERENCES [dbo].[CTKHUYENMAI] ([PK_SEQ])
+GO
+
+ALTER TABLE [dbo].[ThayDoiKM_CTKM] CHECK CONSTRAINT [FK_ThayDoiKM_CTKM_CTKM]
+GO
+
+ALTER TABLE [dbo].[ThayDoiKM_CTKM]  WITH CHECK ADD  CONSTRAINT [FK_ThayDoiKM_CTKM_ThayDoiKM] FOREIGN KEY([ThayDoiKM_FK])
+REFERENCES [dbo].[ThayDoiKM] ([PK_SEQ])
+GO
+
+ALTER TABLE [dbo].[ThayDoiKM_CTKM] CHECK CONSTRAINT [FK_ThayDoiKM_CTKM_ThayDoiKM]
+GO
+
+
+
+/****** Object:  Table [dbo].[ThayDoiKM]    Script Date: 02/13/2014 09:57:59 ******/
+SET ANSI_NULLS ON
+GO
+
+SET QUOTED_IDENTIFIER ON
+GO
+
+SET ANSI_PADDING ON
+GO
+
+CREATE TABLE [dbo].[ThayDoiKM](
+	[PK_SEQ] [numeric](18, 0) IDENTITY(100000,1) NOT NULL,
+	[LOAI] [char](1) NULL,
+	[TRAKM_FK] [numeric](18, 0) NULL,
+	[DKKM_FK] [numeric](18, 0) NULL,
+	[NGAYTAO] [varchar](10) NULL,
+	[NGUOITAO] [numeric](18, 0) NULL,
+	[NGAYSUA] [varchar](10) NULL,
+	[NGUOISUA] [numeric](18, 0) NULL,
+	[TRANGTHAI] [char](1) NULL,
+	[NGUOIDUYET] [numeric](18, 0) NULL,
+	[NGAYDUYET] [varchar](10) NULL,
+	[DATEDUYET] [datetime] NULL,
+	[CTKM_FK] [numeric](18, 0) NULL,
+PRIMARY KEY CLUSTERED 
+(
+	[PK_SEQ] ASC
+)WITH (PAD_INDEX  = OFF, STATISTICS_NORECOMPUTE  = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS  = ON, ALLOW_PAGE_LOCKS  = ON) ON [PRIMARY]
+) ON [PRIMARY]
+
+GO
+
+SET ANSI_PADDING OFF
+GO
+
+ALTER TABLE [dbo].[ThayDoiKM] ADD  DEFAULT (getdate()) FOR [DATEDUYET]
+GO
+
+
+
+

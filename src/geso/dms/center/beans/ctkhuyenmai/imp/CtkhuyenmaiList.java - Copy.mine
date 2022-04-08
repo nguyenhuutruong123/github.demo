@@ -1,0 +1,258 @@
+package geso.dms.center.beans.ctkhuyenmai.imp;
+
+import geso.dms.center.beans.ctkhuyenmai.ICtkhuyenmaiList;
+import geso.dms.center.util.IPhanTrang;
+import geso.dms.center.util.PhanTrang;
+import geso.dms.center.util.Phan_Trang;
+import geso.dms.distributor.db.sql.dbutils;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+
+import javax.servlet.http.HttpServletRequest;
+
+public class CtkhuyenmaiList extends Phan_Trang implements ICtkhuyenmaiList 
+{
+	private static final long serialVersionUID = -9217977546733610214L;
+
+	String userId; 
+
+	String diengiai;
+	String tungay;
+	String denngay;
+	String trangthai;
+	String msg;
+
+	int num;
+	ResultSet ctkmList;
+	//	List<ICtkhuyenmai> ctkmList;
+
+	dbutils db;
+
+	private int[] listPages;
+
+	private int currentPages;
+
+	private HttpServletRequest request;
+
+	public CtkhuyenmaiList(String[] param)
+	{
+		this.diengiai = param[0];
+		this.tungay = param[1];
+		this.denngay = param[2];
+		this.msg = "";
+		this.num = Integer.parseInt(param[3]);
+		currentPages = 1;
+		listPages = new int[num];
+		for(int i = 0; i < this.num; i++)
+			listPages[i]=i+1;
+
+		db = new dbutils();
+	}
+
+	public CtkhuyenmaiList()
+	{
+		this.diengiai = "";
+		this.denngay = "";
+		this.tungay = "";
+		this.trangthai = "";
+		this.msg = "";
+		currentPages = 1;
+		num = 1;
+		this.db = new dbutils();
+	}
+
+	public HttpServletRequest getRequestObj() 
+	{
+		return this.request;
+	}
+
+	public void setRequestObj(HttpServletRequest request) 
+	{
+		this.request = request;
+	}
+
+	public int getNum(){
+		return this.num;
+	}
+	public void setNum(int num){
+		this.num = num;
+		listPages = new int[num];
+		for(int i = 0; i < this.num; i++)
+			listPages[i]=i+1;
+	}
+	public String getUserId()
+	{
+		return this.userId;
+	}
+
+	public void setUserId(String userId) 
+	{
+		this.userId = userId;
+	}
+
+	public String getDiengiai() 
+	{		
+		return this.diengiai;
+	}
+
+	public void setDiengiai(String diengiai) 
+	{
+		this.diengiai = diengiai;
+	}
+
+	public String getTrangthai() 
+	{		
+		return this.trangthai;
+	}
+
+	public void setTrangthai(String trangthai) 
+	{
+		this.trangthai = trangthai;
+	}
+
+	public String getTungay() 
+	{		
+		return this.tungay;
+	}
+
+	public void setTungay(String tungay)
+	{
+		this.tungay = tungay;		
+	}
+
+	public String getDenngay() 
+	{		
+		return this.denngay;
+	}
+
+	public void setDenngay(String denngay) 
+	{
+		this.denngay = denngay;		
+	}
+
+	/*	public List<ICtkhuyenmai> getCtkmList() 
+	{		
+		return this.ctkmList;
+	}*/
+
+	public ResultSet getCtkmList() 
+	{		
+		return this.ctkmList;
+	}
+
+	/*	public void setCtkmList(List<ICtkhuyenmai> ctkmList) 
+	{
+		this.ctkmList = ctkmList;	
+	}*/ 
+
+	public void setCtkmList(ResultSet ctkmlist) 
+	{
+		this.ctkmList = ctkmlist;	
+	}
+
+	public void init(String search) 
+	{
+		this.db = new dbutils();
+
+		String query = "";	
+		if (search.length() == 0)
+		{
+
+			query = "select a.PK_SEQ as ctkmId, a.scheme, substring(diengiai,1,100) as diengiai, a.TUNGAY, a.DENNGAY, case when " +
+					" a.LOAICT is null then 1 else a.LOAICT end as type, isnull(a.NGANSACH,0) as ngansach, a.DASUDUNG, a.NGAYTAO, a.NGAYSUA, b.TEN as nguoitao, c.TEN as nguoisua "+
+					"			,STUFF    "+   
+					"			(     "+
+					"				(    "+
+					"					select DISTINCT TOP 100  PERCENT ' , ' + dd.ten  "+
+					"		from ctkm_npp aa inner join nhaphanphoi bb on bb.pk_seq=aa.npp_fk "+
+					"			left join khuvuc cc on cc.pk_Seq=bb.khuvuc_fk "+
+					"			left join vung dd on dd.pk_Seq=cc.vung_fk "+
+					"					where aa.ctkm_Fk=a.pk_Seq "+
+					"					ORDER BY ' , ' + dd.ten "+
+					"					FOR XML PATH('') "+      
+					"				 ), 1, 2, ''   "+
+					"			) + ' '  AS vTen  "+
+					" , (  "+
+					"		select COUNT(*)  "+
+					"		from PHANBOKHUYENMAI pb where pb.CTKM_FK=a.PK_SEQ "+
+					"						and NGANSACH!=0 ) as isPB "+					
+					"	, (select COUNT(*) From DONHANG_CTKM_TRAKM  km where km.CTKMID=a.PK_SEQ  )  "+
+					"	+ "+
+					"	(select COUNT(*) from ERP_DONDATHANG_CTKM_TRAKM  where CTKMID=a.PK_SEQ )as soDH "+
+					" from CTKHUYENMAI a inner join NHANVIEN b on a.NGUOITAO = b.PK_SEQ inner join NHANVIEN c on a.NGUOISUA = c.PK_SEQ ";
+			System.out.println("Cau select : "+query);
+		}
+		else
+		{
+			query = search;
+		}
+
+		this.ctkmList =  createSplittingData(50, 10, "ctkmId desc, denngay desc", query);
+	}
+
+
+	public void DBclose() 
+	{
+
+	}
+
+
+	public int getCurrentPage() {
+
+		return this.currentPages;
+	}
+
+
+	public void setCurrentPage(int current) {
+
+		this.currentPages = current;
+	}
+
+
+	public int[] getListPages() {
+
+		return this.listPages;
+	}
+
+
+	public void setListPages(int[] listPages) {
+
+		this.listPages = listPages;
+	}
+
+
+	public int getLastPage() {
+
+		ResultSet rs = db.get("select count(*) as c from CTKHUYENMAI");
+		try 
+		{
+			rs.next();
+			int count = Integer.parseInt(rs.getString("c"));
+			rs.close();
+			return count;
+		}
+		catch (SQLException e) {}
+
+		return 0;
+	}
+
+
+	public int[] getNewPagesList(String action, int num, int currentPage, int theLastPage, String[] listPage) {
+
+		IPhanTrang pt = new PhanTrang();
+		return pt.getNewPagesList(action, num, currentPage, theLastPage, listPage);
+	}
+
+	public String getMessage() 
+	{
+		return this.msg;
+	}
+
+	public void setMessage(String msg) 
+	{
+		this.msg = msg;
+	}
+
+
+
+}
